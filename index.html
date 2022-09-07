@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>GridderJS</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div class="gridder">
+            <!-- You can load specify which content is loaded by specifying the #ID of the div where the content is  -->
+            <div class="gridder-list" data-target="content1"></div>
+            <div class="gridder-list" data-target="content2"></div>
+            <div class="gridder-list" data-target="content3"></div>
+            <div class="gridder-list" data-target="content4"></div>
+            <div class="gridder-list" data-target="content5"></div>
+            <div class="gridder-list" data-target="content6"></div>
+        </div>
+
+        <hr />
+
+        <div class="gridder">
+            <!-- You can load specify which content is loaded by specifying the #ID of the div where the content is  -->
+            <div class="gridder-list" data-target="content1"></div>
+            <div class="gridder-list" data-target="content2"></div>
+            <div class="gridder-list" data-target="content3"></div>
+            <div class="gridder-list" data-target="content4"></div>
+            <div class="gridder-list" data-target="content5"></div>
+            <div class="gridder-list" data-target="content6"></div>
+        </div>
+
+        <!-- Gridder content -->
+        <div id="content1" style="display:none"> Content 1 goes here... </div>
+        <div id="content2" style="display:none"> Content 2 goes here... </div>
+        <div id="content3" style="display:none"> Content 3 goes here... </div>
+        <div id="content4" style="display:none"> Content 4 goes here... </div>
+        <div id="content5" style="display:none"> Content 5 goes here... </div>
+        <div id="content6" style="display:none"> Content 6 goes here... </div>
+
+        <script src="index.js"></script>
+        <script>
+          // Instantiate the plugin
+          new GridderJS('.gridder', {
+            'columns': 3,
+            'scrollOffset': 50,
+            'debug': true
+          });
+
+        </script>
+    </body>
+</html>
