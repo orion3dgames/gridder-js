@@ -1,4 +1,4 @@
-# GridderJS 2.0.0 
+# GridderJS 0.0.1
 
 > ⚠ **Warning**
 > This plugin is in heavy development and syntax may change quite a bit.
