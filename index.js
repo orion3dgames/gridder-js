@@ -67,9 +67,13 @@ var GridderJS = (function () {
 
       let el = e.target;
 
+      // make sure we have the grid item
+      if(!el.classList.contains('active')){
+        el = el.closest('.'+gridClass);
+      }
+
       // if same grid item is selected, close it
       if(el.classList.contains('active')){
-        debug.log('already active', e);
         close(el);  
         return false;
       }
@@ -110,29 +114,102 @@ var GridderJS = (function () {
       // insert expander
       insertAfter(template, el);
 
+      ///////////////////////////
+      // add navigation events
+
+      template.querySelector('.gridder-close').addEventListener('click', () => {
+        close(el);
+      });
+
+      template.querySelector('.gridder-next').addEventListener('click', () => {
+        let target = getNextSibling(el, '.'+gridClass);
+        if(target) {
+          const event = new Event('click', {bubbles: true});
+          target.dispatchEvent(event);
+        }
+      });
+
+      template.querySelector('.gridder-prev').addEventListener('click', () => {
+        let target = getPreviousSibling(el, '.'+gridClass);
+        if(target) {
+          const event = new Event('click', {bubbles: true});
+          target.dispatchEvent(event);
+        }
+      });
+
     }
 
     const close = function (el) {
-
       el.classList.remove('active');
-
       el.parentNode.querySelector('.'+expanderClass).remove();
-
     }
 
-    function createNavigationElements() {
+    const createNavigationElements = function () {
+
+      // add close button
       let close = document.createElement('a');
       close.classList.add('gridder-close');
       close.innerHTML = "Close";
+
+      // add prev button
+      let prev = document.createElement('a');
+      prev.classList.add('gridder-prev');
+      prev.innerHTML = "Previous";
+
+      // add next button
+      let next = document.createElement('a');
+      next.classList.add('gridder-next');
+      next.innerHTML = "Next";
+
+      // create navigation container
       let el = document.createElement('div');
       el.classList.add('gridder-navigation');
+
+      // put everything together
+      el.appendChild(prev);
+      el.appendChild(next);
       el.appendChild(close);
+
       return el;
     }
 
     function insertAfter(newNode, existingNode) {
       existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
     }
+
+    var getNextSibling = function (elem, selector) {
+
+      // Get the next sibling element
+      var sibling = elem.nextElementSibling;
+
+      // If there's no selector, return the first sibling
+      if (!selector) return sibling;
+
+      // If the sibling matches our selector, use it
+      // If not, jump to the next sibling and continue the loop
+      while (sibling) {
+        if (sibling.matches(selector)) return sibling;
+        sibling = sibling.nextElementSibling
+      }
+
+    };
+
+    var getPreviousSibling = function (elem, selector) {
+
+      // Get the next sibling element
+      var sibling = elem.previousElementSibling;
+
+      // If there's no selector, return the first sibling
+      if (!selector) return sibling;
+
+      // If the sibling matches our selector, use it
+      // If not, jump to the next sibling and continue the loop
+      while (sibling) {
+        if (sibling.matches(selector)) return sibling;
+        sibling = sibling.previousElementSibling;
+      }
+
+    };
 
     var debug = (function () {
       return {

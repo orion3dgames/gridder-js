@@ -1,15 +1,18 @@
-.gridder{
 
+/* DEMO THEME */
+
+.gridder a:hover{
+    color: blue;
+    cursor: pointer;
 }
 
-.gridder img{
+.gridder-list img{
     width: 100%;
 }
 
 .gridder-list{
     border: 1px solid blue;
     background: #EEE;
-    height: 150px;
     cursor: pointer;
 }
 .gridder-list.active{
@@ -18,9 +21,6 @@
 
 .gridder-show{
     width: 100%;
-    height: 150px;
     background: #EEE;
     border: 1px solid #000;
 }
-
-
