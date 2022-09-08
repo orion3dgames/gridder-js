@@ -114,6 +114,9 @@ var GridderJS = (function () {
       // insert expander
       insertAfter(template, el);
 
+      // scroll into view
+      template.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+
       ///////////////////////////
       // add navigation events
 
