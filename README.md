@@ -22,7 +22,7 @@ We have all searched images on Google, so you probably noticed the interesting e
 1. Include plugin's code:
 
 	```html
-	<script src="index.js"></script>
+	<script src="dist/gridder-js.js"></script>
 	```
 
 3. HTML

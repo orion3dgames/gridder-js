@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>GridderJS</title>
+        <link rel="stylesheet" href="../dist/demo.css">
+    </head>
+    <body>
+
+        <div id="app">
+            <div class="gridder">
+                <div class="gridder-list" v-for="champion in champions.data" :data-target="'content-'+champion.id">
+                    {{champion.name}}
+                </div>
+            </div>
+            <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
+                {{champion.name}}
+            </div>
+        </div>
+        
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="api/data.js"></script>
+        <script src="../dist/gridder-js.js"></script>
+
+        <script>
+            
+            const { createApp } = Vue
+    
+            createApp({
+                data() {
+                    return {
+                        champions: champions
+                    }
+                },
+                mounted() {
+                   
+                    // Instantiate the plugin
+                    new GridderJS('.gridder', {
+                        'columns': 4,
+                        'gap': 5,
+                        'debug': true
+                    });
+
+                }
+            }).mount('#app')
+        
+            
+
+        </script>
+    </body>
+</html>

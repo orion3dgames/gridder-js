@@ -14,8 +14,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build && yarn run css",
-    "css": "yarn sass src/:dist/ --style compressed",
-    "watch-css": "yarn sass src/:dist/ --watch --style compressed"
+    "css": "yarn sass demo/scss/:dist/ --style compressed"
   },
   "repository": {
     "type": "git",

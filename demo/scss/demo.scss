@@ -1,6 +1,4 @@
-
 /* DEMO THEME */
-
 .gridder a:hover{
   color: blue;
   cursor: pointer;
@@ -11,16 +9,18 @@
 }
 
 .gridder-list{
-  border: 1px solid blue;
-  background: #EEE;
+  border: 1px solid white;
   cursor: pointer;
 }
+
 .gridder-list.active{
   border: 1px solid red;
 }
 
 .gridder-show{
   width: 100%;
+  color: rgb(30, 41, 185);  
   background: #EEE;
-  border: 1px solid #000;
-}
+  border: 1px solid rgb(0, 47, 255);
+} 
+

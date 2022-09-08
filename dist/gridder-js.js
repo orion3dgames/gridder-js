@@ -1,4 +1,4 @@
-GridderJS = function() {
+/* TEST */ GridderJS = function() {
     "use strict";
     /**
    * Create the Constructor object
@@ -9,7 +9,7 @@ GridderJS = function() {
     }) {
         //
         // Variables
-        //
+        // 
         var publicAPIs = {};
         var pluginTitle = "GridderJS";
         var expanderClass = "gridder-show";

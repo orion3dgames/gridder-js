@@ -1,8 +1,5 @@
-/*!
- * Revealing Constructor Pattern Boilerplate
- * (c) 2019 Chris Ferdinandi, MIT License, https://gomakethings.com
- */
-var GridderJS = (function () {
+/* TEST */
+GridderJS = (function () {
 
   'use strict';
 
@@ -13,11 +10,11 @@ var GridderJS = (function () {
     columns: 4,
     gap: 20,
     debug: false,
-  }) {
+  }) {  
 
     //
     // Variables
-    //
+    // 
     var publicAPIs = {};
     var pluginTitle = "GridderJS";
     var expanderClass = "gridder-show";
