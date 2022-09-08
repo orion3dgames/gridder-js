@@ -1,6 +1,6 @@
 {
   "name": "gridder-js",
-  "version": "2.0.0",
+  "version": "0.0.1",
   "description": "A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.",
   "keywords": [
     "js",
@@ -9,6 +9,14 @@
     "expanding",
     "grid"
   ],
+  "source": "src/gridder-js.js",
+  "main": "dist/gridder-js.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build && yarn run css",
+    "css": "yarn sass src/:dist/ --style compressed",
+    "watch-css": "yarn sass src/:dist/ --watch --style compressed"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/oriongunning/gridder.git"
@@ -17,10 +25,11 @@
     "url": "https://github.com/oriongunning/gridder/issues"
   },
   "author": {
-    "name": "Orion Gunning",
-    "email": "orion.gunning@gmail.com",
-    "url": "http://www.oriongunning.com/"
+    "name": "Orion Gunning"
   },
-  "homepage": "http://www.oriongunning.com/",
   "license": "MIT",
+  "devDependencies": {
+    "parcel": "latest",
+    "sass": "^1.33.0"
+  }
 }
