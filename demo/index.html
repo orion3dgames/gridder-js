@@ -5,21 +5,44 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>GridderJS</title>
-        <link rel="stylesheet" href="../dist/demo.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     </head>
-    <body>
+    <body class="p-4">
+
+        <div class="container">
+
+            <h1>GridderJS</h1>
+
+            <hr />
+
+            <p class="lead">A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.</p>
+
+            <hr />
+
+        </div>
 
         <div id="app">
             <div class="gridder">
-                <div class="gridder-list" v-for="champion in champions.data" :data-target="'content-'+champion.id">
-                    {{champion.name}}
+                <div class="gridder-list border p-2 text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
+                    <!--<img :src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.key+'_0.jpg'" />-->
+                    <strong>{{champion.name}}</strong><br>
+                    <small class="text-muted">{{ champion.title }}</small>
                 </div>
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
-                {{champion.name}}
+                <div class="row">
+                    <img :src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.key+'_0.jpg'" class="col-sm-6" />
+                    <div class="col-sm-6">
+                        <h2>{{champion.name}}</h2>
+                        <p>
+                            {{ champion.lore }}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         
+    
         <script src="https://unpkg.com/vue@3"></script>
         <script src="api/data.js"></script>
         <script src="../dist/gridder-js.js"></script>
@@ -38,8 +61,8 @@
                    
                     // Instantiate the plugin
                     new GridderJS('.gridder', {
-                        'columns': 4,
-                        'gap': 5,
+                        'columns': 5,
+                        'gap': 10,
                         'debug': true
                     });
 
