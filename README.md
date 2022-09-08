@@ -20,6 +20,7 @@ We have all searched images on Google, so you probably noticed the interesting e
 ### ROADMAP
 - add the ability to load ajax content when clicking on a grid item
 - add more callbacks
+- add mobile responsive css / js (not sure how to do that yet)
 
 ***
 
