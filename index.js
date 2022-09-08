@@ -10,8 +10,8 @@ var GridderJS = (function () {
    * Create the Constructor object
    */
   var Constructor = function (target, options = {
-    scrollOffset: 30,
     columns: 4,
+    gap: 20,
     debug: false,
   }) {
 
@@ -30,7 +30,7 @@ var GridderJS = (function () {
     /**
      * A private method
      */
-    const init = function () {
+    var init = function () {
 
       let nodes = document.querySelectorAll(target);
 
@@ -44,7 +44,7 @@ var GridderJS = (function () {
         parentGrid.style.display = 'grid';
         parentGrid.style.gridTemplateColumns = 'repeat('+options.columns+', 1fr)';
         parentGrid.style.gridAutoFlow = 'row dense';
-        parentGrid.style.gap = '20px';
+        parentGrid.style.gap = options.gap+'px';
 
         // init events
         let ul = parentGrid.querySelectorAll("."+gridClass);
@@ -61,7 +61,7 @@ var GridderJS = (function () {
      * Open expander
      * @param e
      */
-    const open = function (e) {
+    var open = function (e) {
 
       debug.log(' Clicked grid item', e);
 
@@ -118,36 +118,17 @@ var GridderJS = (function () {
       template.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
 
       ///////////////////////////
-      // add navigation events
-
-      template.querySelector('.gridder-close').addEventListener('click', () => {
-        close(el);
-      });
-
-      template.querySelector('.gridder-next').addEventListener('click', () => {
-        let target = getNextSibling(el, '.'+gridClass);
-        if(target) {
-          const event = new Event('click', {bubbles: true});
-          target.dispatchEvent(event);
-        }
-      });
-
-      template.querySelector('.gridder-prev').addEventListener('click', () => {
-        let target = getPreviousSibling(el, '.'+gridClass);
-        if(target) {
-          const event = new Event('click', {bubbles: true});
-          target.dispatchEvent(event);
-        }
-      });
+      // initialize navigation events
+      initializeNavigationEvents(template, el);
 
     }
 
-    const close = function (el) {
+    var close = function (el) {
       el.classList.remove('active');
       el.parentNode.querySelector('.'+expanderClass).remove();
     }
 
-    const createNavigationElements = function () {
+    var createNavigationElements = function () {
 
       // add close button
       let close = document.createElement('a');
@@ -176,42 +157,50 @@ var GridderJS = (function () {
       return el;
     }
 
-    function insertAfter(newNode, existingNode) {
+    var initializeNavigationEvents = function(template, parent) {
+
+      template.querySelector('.gridder-close').addEventListener('click', () => {
+        close(parent);
+      });
+
+      template.querySelector('.gridder-next').addEventListener('click', () => {
+        let target = getNextSibling(parent, '.'+gridClass);
+        if(target) {
+          const event = new Event('click', {bubbles: true});
+          target.dispatchEvent(event);
+        }
+      });
+
+      template.querySelector('.gridder-prev').addEventListener('click', () => {
+        let target = getPreviousSibling(parent, '.'+gridClass);
+        if(target) {
+          const event = new Event('click', {bubbles: true});
+          target.dispatchEvent(event);
+        }
+      });
+
+    }
+
+    var insertAfter = function(newNode, existingNode) {
       existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
     }
 
     var getNextSibling = function (elem, selector) {
-
-      // Get the next sibling element
       var sibling = elem.nextElementSibling;
-
-      // If there's no selector, return the first sibling
       if (!selector) return sibling;
-
-      // If the sibling matches our selector, use it
-      // If not, jump to the next sibling and continue the loop
       while (sibling) {
         if (sibling.matches(selector)) return sibling;
         sibling = sibling.nextElementSibling
       }
-
     };
 
     var getPreviousSibling = function (elem, selector) {
-
-      // Get the next sibling element
       var sibling = elem.previousElementSibling;
-
-      // If there's no selector, return the first sibling
       if (!selector) return sibling;
-
-      // If the sibling matches our selector, use it
-      // If not, jump to the next sibling and continue the loop
       while (sibling) {
         if (sibling.matches(selector)) return sibling;
         sibling = sibling.previousElementSibling;
       }
-
     };
 
     var debug = (function () {
