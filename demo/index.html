@@ -24,14 +24,13 @@
         <div id="app">
             <div class="gridder">
                 <div class="gridder-list border p-2 text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
-                    <!--<img :src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.key+'_0.jpg'" />-->
                     <strong>{{champion.name}}</strong><br>
                     <small class="text-muted">{{ champion.title }}</small>
                 </div>
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
                 <div class="row">
-                    <img :src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.key+'_0.jpg'" class="col-sm-6" />
+                    <img :data-src="'https://ddragon.leagueoflegends.com/cdn/9.18.1/img/champion/'+champion.image.full"  class="col-sm-6 lazy" />
                     <div class="col-sm-6">
                         <h2>{{champion.name}}</h2>
                         <p>
@@ -42,7 +41,7 @@
             </div>
         </div>
         
-    
+        <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
         <script src="https://unpkg.com/vue@3"></script>
         <script src="api/data.js"></script>
         <script src="../dist/gridder-js.js"></script>
@@ -58,12 +57,19 @@
                     }
                 },
                 mounted() {
-                   
+
                     // Instantiate the plugin
                     new GridderJS('.gridder', {
                         'columns': 5,
                         'gap': 10,
-                        'debug': true
+                        'debug': true,
+                        'onOpen': function(el){
+                            
+                            var myLazyLoad = new LazyLoad({
+                                container: el
+                            });
+
+                        }
                     });
 
                 }

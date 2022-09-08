@@ -5,7 +5,8 @@
    */ var Constructor = function(target, options = {
         columns: 4,
         gap: 20,
-        debug: false
+        debug: false,
+        onOpen: function() {}
     }) {
         //
         // Variables
@@ -83,9 +84,10 @@
                 block: "center",
                 inline: "nearest"
             });
-            ///////////////////////////
             // initialize navigation events
             initializeNavigationEvents(template, el);
+            // open expander callback
+            if (typeof options.onOpen === "function") options.onOpen(template);
         };
         var close = function(el) {
             el.classList.remove("active");

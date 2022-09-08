@@ -10,6 +10,7 @@ GridderJS = (function () {
     columns: 4,
     gap: 20,
     debug: false,
+    onOpen: function(){},
   }) {  
 
     //
@@ -114,9 +115,13 @@ GridderJS = (function () {
       // scroll into view
       template.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
 
-      ///////////////////////////
       // initialize navigation events
       initializeNavigationEvents(template, el);
+
+      // open expander callback
+      if (typeof(options.onOpen) === "function") {
+        options.onOpen(template);
+      }
 
     }
 
