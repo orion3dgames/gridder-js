@@ -1,26 +1,32 @@
-/* DEMO THEME */
-.gridder a:hover{
-  color: red;
-  cursor: pointer;
-}
 
-.gridder-list img{
-  width: 100%;
-}
+////////////////////////////////
+/* DEMO THEME */
 
 .gridder-list{
-  border: 1px solid white;
+  border: 1px solid #EEE;
   cursor: pointer;
-}
-
-.gridder-list.active{
-  border: 1px solid red;
+  &:hover{
+    border: 1px solid #c5c5c5;
+    background: #F7F7F7;
+  }
 }
 
 .gridder-show{
-  width: 100%;
-  color: rgb(30, 41, 185);  
-  background: #EEE;
-  border: 1px solid rgb(0, 47, 255);
-} 
+  border: 1px solid #EEE;
+  padding: 15px;
+}
 
+.gridder-navigation{
+  float: right;
+  a{
+    display:inline-block;
+    margin-left: 5px;
+    padding: 5px;
+    border: 1px solid #EEE;
+    cursor: pointer;
+    &:hover{
+      background: #EEE;
+    }
+  }
+}
+ 

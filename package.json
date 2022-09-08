@@ -11,10 +11,14 @@
   ],
   "source": "src/gridder-js.js",
   "main": "dist/gridder-js.js",
+  "targets": {
+    "demo": {
+      "source": "demo/scss/demo.scss"
+    }
+  },
   "scripts": {
     "watch": "parcel watch",
-    "build": "parcel build && yarn run css",
-    "css": "yarn sass demo/scss/:dist/ --style compressed"
+    "build": "parcel build"
   },
   "repository": {
     "type": "git",

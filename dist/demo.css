@@ -1,1 +1,32 @@
-.gridder a:hover{color:red;cursor:pointer}.gridder-list img{width:100%}.gridder-list{border:1px solid #fff;cursor:pointer}.gridder-list.active{border:1px solid red}.gridder-show{width:100%;color:#1e29b9;background:#eee;border:1px solid #002fff}/*# sourceMappingURL=demo.css.map */
+.gridder-list {
+  cursor: pointer;
+  border: 1px solid #eee;
+}
+
+.gridder-list:hover {
+  background: #f7f7f7;
+  border: 1px solid #c5c5c5;
+}
+
+.gridder-show {
+  border: 1px solid #eee;
+  padding: 15px;
+}
+
+.gridder-navigation {
+  float: right;
+}
+
+.gridder-navigation a {
+  cursor: pointer;
+  border: 1px solid #eee;
+  margin-left: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.gridder-navigation a:hover {
+  background: #eee;
+}
+
+/*# sourceMappingURL=demo.css.map */

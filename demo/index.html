@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>GridderJS</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link href="../dist/demo.css" rel="stylesheet">
     </head>
     <body class="p-4">
 
@@ -25,14 +27,15 @@
 
         <div id="app">
             <div class="gridder">
-                <div class="gridder-list border p-2 text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
+                <div class="gridder-list p-2 text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
                     <strong>{{champion.name}}</strong><br>
                     <small class="text-muted">{{ champion.title }}</small>
                 </div>
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
                 <div class="row">      
-                    <div class="col-sm-6">
+                    <img :data-src="'https://ddragon.leagueoflegends.com/cdn/9.18.1/img/champion/'+champion.image.full" class="col-sm-4 lazy" />
+                    <div class="col-sm-8">
                         <h2>{{champion.name}}</h2>
                         <p>
                             {{ champion.blurb }}
@@ -61,7 +64,7 @@
 
                     // Instantiate the plugin
                     new GridderJS('.gridder', {
-                        'columns': 5,
+                        'columns': 4,
                         'gap': 10,
                         'debug': true,
                         'onOpen': function(el){

@@ -7,7 +7,7 @@
 
 We have all searched images on Google, so you probably noticed the interesting expanding preview when you click on a thumbnail. It’s a very nice effect and practical, allowing you quickly see more details without having to reload a new page. This plugin allows you to recreate a similar effect on a thumbnail grid. The idea is to open a preview when clicking on a thumbnail and to show a larger image and some other content like a title, a description and a link
 
-=======
+***
 
 ### FEATURES
 - Multiple instances
@@ -15,7 +15,13 @@ We have all searched images on Google, so you probably noticed the interesting e
 - Expanding preview with details
 - Smooth Scrolling
 
-=======
+***
+
+### ROADMAP
+- add the ability to load ajax content when clicking on a grid item
+- add more callbacks
+
+***
 
 ## Usage
 
@@ -62,6 +68,8 @@ We have all searched images on Google, so you probably noticed the interesting e
           });
     </script>
     ```
+
+***
 
 <a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.
 
