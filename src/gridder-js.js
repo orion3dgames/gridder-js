@@ -224,22 +224,28 @@ GridderJS = (function () {
         close(parent);
       });
 
-      template.querySelector('.gridder-next').addEventListener('click', () => {
-        let target = getNextSibling(parent, '.'+gridClass);
-        if(target) {
-          const event = new Event('click', {bubbles: true});
-          target.dispatchEvent(event);
-        }
-      });
+      let next = template.querySelector('.gridder-next');
+      if(next){
+        next.addEventListener('click', () => {
+          let target = getNextSibling(parent, '.'+gridClass);
+          if(target) {
+            const event = new Event('click', {bubbles: true});
+            target.dispatchEvent(event);
+          }
+        });
+      }
 
-      template.querySelector('.gridder-prev').addEventListener('click', () => {
-        let target = getPreviousSibling(parent, '.'+gridClass);
-        if(target) {
-          const event = new Event('click', {bubbles: true});
-          target.dispatchEvent(event);
-        }
-      });
-
+      let prev = template.querySelector('.gridder-prev');
+      if(prev){
+        prev.addEventListener('click', () => {
+          let target = getPreviousSibling(parent, '.'+gridClass);
+          if(target) {
+            const event = new Event('click', {bubbles: true});
+            target.dispatchEvent(event);
+          }
+        });
+      }
+     
     }
 
     var insertAfter = function(newNode, existingNode) {
