@@ -70,6 +70,8 @@ GridderJS = function() {
             // close expander first if open
             let existingExpander = el.parentNode.querySelector("." + expanderClass);
             if (existingExpander) existingExpander.remove();
+            // insert expander
+            let template = insertExpander(el);
             // get expander content
             const innerHtml = await getExpanderContent(el);
             // create navigation
@@ -78,13 +80,22 @@ GridderJS = function() {
             let gridderContent = document.createElement("div");
             gridderContent.classList.add("gridder-content");
             gridderContent.innerHTML = innerHtml;
-            // create expander
-            let template = document.createElement("div");
+            // append content
+            template.innerHTML = "";
             template.appendChild(gridderNavigation);
             template.appendChild(gridderContent);
+            // initialize navigation events
+            initializeNavigationEvents(template, el);
+            // open expander callback
+            if (typeof options.onOpen === "function") options.onOpen(template);
+        };
+        var insertExpander = function(el) {
+            // create expander
+            let template = document.createElement("div");
             // style expander
             template.classList.add(expanderClass);
             template.style.gridColumn = "1 / span " + options.columns;
+            template.innerHTML = "Loading...";
             // insert expander
             insertAfter(template, el);
             // scroll into view
@@ -93,10 +104,7 @@ GridderJS = function() {
                 block: "center",
                 inline: "nearest"
             });
-            // initialize navigation events
-            initializeNavigationEvents(template, el);
-            // open expander callback
-            if (typeof options.onOpen === "function") options.onOpen(template);
+            return template;
         };
         var close = function(el) {
             // remove grid item active class
@@ -113,7 +121,7 @@ GridderJS = function() {
                 let targetElement = document.getElementById(target);
                 return targetElement.innerHTML.trim();
             }
-            // or url content
+            // url content
             let url = el.dataset.url;
             let response = await fetch(url);
             return response.text();

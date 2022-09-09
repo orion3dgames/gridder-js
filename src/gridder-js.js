@@ -108,6 +108,9 @@ GridderJS = (function () {
         existingExpander.remove();
       }
 
+      // insert expander
+      let template = insertExpander(el);
+
       // get expander content
       const innerHtml = await getExpanderContent(el);
 
@@ -119,20 +122,10 @@ GridderJS = (function () {
       gridderContent.classList.add('gridder-content');
       gridderContent.innerHTML = innerHtml;
 
-      // create expander
-      let template = document.createElement('div');
+      // append content
+      template.innerHTML = "";
       template.appendChild(gridderNavigation);
       template.appendChild(gridderContent);
-
-      // style expander
-      template.classList.add(expanderClass);
-      template.style.gridColumn = '1 / span '+options.columns;
-
-      // insert expander
-      insertAfter(template, el);
-
-      // scroll into view
-      template.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
 
       // initialize navigation events
       initializeNavigationEvents(template, el);
@@ -142,6 +135,25 @@ GridderJS = (function () {
         options.onOpen(template);
       }
 
+    }
+
+    var insertExpander = function (el) {
+
+      // create expander
+      let template = document.createElement('div');
+
+      // style expander
+      template.classList.add(expanderClass);
+      template.style.gridColumn = '1 / span '+options.columns;
+      template.innerHTML = "Loading...";
+
+      // insert expander
+      insertAfter(template, el);
+
+      // scroll into view
+      template.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+
+      return template;
     }
 
     var close = function (el) {
@@ -167,12 +179,12 @@ GridderJS = (function () {
         let targetElement = document.getElementById(target);
         return targetElement.innerHTML.trim();
       }
-      
-      // or url content
+  
+      // url content
       let url = el.dataset.url;
       let response = await fetch(url);
       return response.text();
-
+      
     }
 
     var createNavigationElements = function () {
