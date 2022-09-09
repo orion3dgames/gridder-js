@@ -12,6 +12,9 @@
   "source": "src/gridder-js.js",
   "main": "dist/gridder-js.js",
   "targets": {
+    "main": {
+      "source": "src/gridder-js.js"
+    },
     "demo": {
       "source": "demo/scss/demo.scss"
     }
@@ -31,7 +34,11 @@
     "name": "Orion Gunning"
   },
   "license": "MIT",
+  "dependencies": {
+    
+  },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.7.0",
     "parcel": "latest",
     "sass": "^1.33.0"
   }

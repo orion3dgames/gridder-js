@@ -1,4 +1,3 @@
-/* TEST */
 GridderJS = (function () {
 
   'use strict';
@@ -7,11 +6,26 @@ GridderJS = (function () {
    * Create the Constructor object
    */
   var Constructor = function (target, options = {
+
+    // number of columns
     columns: 4,
+
+    // the gap between the columns
     gap: 20,
+
+    // activate debug logging
     debug: false,
+
+    // Called when gridder instance is ready
+    onStart: function(){},
+
+    // Called when gridder instance is open
     onOpen: function(){},
-  }) {  
+
+    // Called when gridder expander is closed
+    onClose: function(){},
+
+}) {  
 
     //
     // Variables
@@ -26,13 +40,13 @@ GridderJS = (function () {
     //
 
     /**
-     * A private method
+     * Inititalize gridder instances
      */
     var init = function () {
 
       let nodes = document.querySelectorAll(target);
 
-      debug.log(pluginTitle+' Initializing '+nodes.length+' instance(s)', nodes[i], options);
+      debug.log(pluginTitle+' Initializing '+nodes.length+' instance(s)ssssssssssssss', options);
 
       for (var i = 0; i < nodes.length; i++) {
 
@@ -52,6 +66,12 @@ GridderJS = (function () {
           });
         });
 
+        // start callback
+        if (typeof(options.onStart) === "function") {
+          options.onStart(parentGrid);
+        }
+
+
       }
     };
 
@@ -59,7 +79,7 @@ GridderJS = (function () {
      * Open expander
      * @param e
      */
-    var open = function (e) {
+    var open = async function (e) {
 
       debug.log(' Clicked grid item', e);
 
@@ -89,8 +109,7 @@ GridderJS = (function () {
       }
 
       // get expander content
-      let target = el.dataset.target;
-      let targetElement = document.getElementById(target);
+      const innerHtml = await getExpanderContent(el);
 
       // create navigation
       let gridderNavigation = createNavigationElements();
@@ -98,7 +117,7 @@ GridderJS = (function () {
       // create content
       let gridderContent = document.createElement('div');
       gridderContent.classList.add('gridder-content');
-      gridderContent.innerHTML = targetElement.innerHTML.trim();
+      gridderContent.innerHTML = innerHtml;
 
       // create expander
       let template = document.createElement('div');
@@ -126,8 +145,34 @@ GridderJS = (function () {
     }
 
     var close = function (el) {
+
+      // remove grid item active class
       el.classList.remove('active');
+
+      // remove expander bloc
       el.parentNode.querySelector('.'+expanderClass).remove();
+
+      // close expander callback
+      if (typeof(options.onClose) === "function") {
+        options.onClose();
+      }
+
+    }
+
+    var getExpanderContent = async function (el) {
+
+      // bloc content
+      if(el.dataset.target){
+        let target = el.dataset.target;
+        let targetElement = document.getElementById(target);
+        return targetElement.innerHTML.trim();
+      }
+      
+      // or url content
+      let url = el.dataset.url;
+      let response = await fetch(url);
+      return response.text();
+
     }
 
     var createNavigationElements = function () {

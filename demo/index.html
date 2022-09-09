@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>GridderJS</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <link href="../dist/demo.css" rel="stylesheet">
+        <link href="../dist/demo/demo.css" rel="stylesheet">
     </head>
     <body class="p-4">
 
@@ -30,6 +30,10 @@
                 <div class="gridder-list p-2 text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
                     <strong>{{champion.name}}</strong><br>
                     <small class="text-muted">{{ champion.title }}</small>
+                </div>
+                <div class="gridder-list p-2 text-center" :data-url="'content.html'">
+                    <strong>AJAX EXAMPLE</strong><br>
+                    <small class="text-muted">Just to give an example</small>
                 </div>
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
@@ -67,12 +71,20 @@
                         'columns': 4,
                         'gap': 10,
                         'debug': true,
+
+                        'onStart': function(el){
+                            console.log('onStart');
+                        },
                         'onOpen': function(el){
+                            console.log('onOpen');
                             var myLazyLoad = new LazyLoad({
                                 container: el
                             });
+                        },
+                        'onClose': function(el){
+                            console.log('onClose');
+                        },
 
-                        }
                     });
 
                 }
