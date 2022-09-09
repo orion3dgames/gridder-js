@@ -18,6 +18,7 @@ We have all searched images on Google, so you probably noticed the interesting e
 ### ROADMAP
 - add mobile responsive css / js (not sure how to do that yet)
 - lazy loading images in expanded content
+- themes
 
 ***
 
@@ -35,6 +36,7 @@ We have all searched images on Google, so you probably noticed the interesting e
     
     <!-- Gridder navigation -->
     <div class="gridder">
+
        <!-- You can load specify which content is loaded by specifying the #ID of the div where the content is  -->
        <div class="gridder-list" data-target="content1"></div>
        <div class="gridder-list" data-target="content2"></div>
@@ -42,6 +44,10 @@ We have all searched images on Google, so you probably noticed the interesting e
        <div class="gridder-list" data-target="content4"></div>
        <div class="gridder-list" data-target="content5"></div>
        <div class="gridder-list" data-target="content6"></div>
+
+       <!-- You can specify data-url to load ajax content using fetch -->
+       <div class="gridder-list" :data-url="'content.html'"></div>
+
     </div>
 
     <!-- Gridder content -->
@@ -59,11 +65,17 @@ We have all searched images on Google, so you probably noticed the interesting e
     ```javascript
     <script>
     	// Instantiate the plugin
-          new GridderJS('.gridder', {
-            'columns': 3,
-            'scrollOffset': 50,
-            'debug': true
-          });
+      new GridderJS('.gridder', {
+        columns: 4,
+        gap: 15,
+        nextText: "Next",
+        prevText: "Previous",
+        closeText: "Close",  
+        debug: true
+        onStart: function(){ console.log('onStart callback'); },
+        onOpen: function(){ console.log('onOpen callback'); },
+        onClose: function(){ console.log('onClose callback'); },
+      });
     </script>
     ```
 
