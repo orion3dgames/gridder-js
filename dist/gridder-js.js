@@ -1,21 +1,26 @@
+var $5802a98cec57ffd5$var$default_values = {
+    // number of columns
+    columns: 4,
+    // the gap between the columns
+    gap: 20,
+    // activate debug logging
+    debug: false,
+    // navigation text
+    nextText: "Next",
+    prevText: "Previous",
+    closeText: "Close",
+    // Called when gridder instance is ready
+    onStart: function() {},
+    // Called when gridder instance is open
+    onOpen: function() {},
+    // Called when gridder expander is closed
+    onClose: function() {}
+};
 GridderJS = function() {
     "use strict";
     /**
    * Create the Constructor object
-   */ var Constructor = function(target, options = {
-        // number of columns
-        columns: 4,
-        // the gap between the columns
-        gap: 20,
-        // activate debug logging
-        debug: false,
-        // Called when gridder instance is ready
-        onStart: function() {},
-        // Called when gridder instance is open
-        onOpen: function() {},
-        // Called when gridder expander is closed
-        onClose: function() {}
-    }) {
+   */ var Constructor = function(target, options) {
         //
         // Variables
         // 
@@ -23,6 +28,10 @@ GridderJS = function() {
         var pluginTitle = "GridderJS";
         var expanderClass = "gridder-show";
         var gridClass = "gridder-list";
+        options = {
+            ...$5802a98cec57ffd5$var$default_values,
+            ...options
+        };
         //
         // Methods
         //
@@ -72,6 +81,12 @@ GridderJS = function() {
             if (existingExpander) existingExpander.remove();
             // insert expander
             let template = insertExpander(el);
+            // scroll into view
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest"
+            });
             // get expander content
             const innerHtml = await getExpanderContent(el);
             // create navigation
@@ -98,12 +113,6 @@ GridderJS = function() {
             template.innerHTML = "Loading...";
             // insert expander
             insertAfter(template, el);
-            // scroll into view
-            template.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "nearest"
-            });
             return template;
         };
         var close = function(el) {
@@ -127,28 +136,29 @@ GridderJS = function() {
             return response.text();
         };
         var createNavigationElements = function(parent) {
+            console.log(options);
             // create navigation container
             let el = document.createElement("div");
             el.classList.add("gridder-navigation");
-            // add close button
-            let close = document.createElement("a");
-            close.classList.add("gridder-close");
-            close.innerHTML = "Close";
-            el.appendChild(close);
             // add prev button
             if (getPreviousSibling(parent, "." + gridClass)) {
                 let prev = document.createElement("a");
                 prev.classList.add("gridder-prev");
-                prev.innerHTML = "Previous";
+                prev.innerHTML = options.prevText;
                 el.appendChild(prev);
             }
             // add next button
             if (getNextSibling(parent, "." + gridClass)) {
                 let next = document.createElement("a");
                 next.classList.add("gridder-next");
-                next.innerHTML = "Next";
+                next.innerHTML = options.nextText;
                 el.appendChild(next);
             }
+            // add close button
+            let close = document.createElement("a");
+            close.classList.add("gridder-close");
+            close.innerHTML = options.closeText;
+            el.appendChild(close);
             return el;
         };
         var initializeNavigationEvents = function(template, parent) {

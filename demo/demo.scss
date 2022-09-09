@@ -9,6 +9,9 @@
     border: 1px solid #c5c5c5;
     background: #F7F7F7;
   }
+  &.active{
+    background-color: #d3d4d4;
+  }
 }
 
 .gridder-show{

@@ -48,6 +48,8 @@
                 </div>
             </div>
         </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         
         <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
         <script src="https://unpkg.com/vue@3"></script>
@@ -70,8 +72,7 @@
                     new GridderJS('.gridder', {
                         'columns': 4,
                         'gap': 10,
-                        'debug': true,
-
+                        'closeText': "<b>X</i>",
                         'onStart': function(el){
                             console.log('onStart');
                         },
@@ -80,9 +81,6 @@
                             var myLazyLoad = new LazyLoad({
                                 container: el
                             });
-                        },
-                        'onClose': function(el){
-                            console.log('onClose');
                         },
 
                     });

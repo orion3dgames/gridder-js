@@ -16,7 +16,7 @@
       "source": "src/gridder-js.js"
     },
     "demo": {
-      "source": "demo/scss/demo.scss"
+      "source": "demo/demo.scss"
     }
   },
   "scripts": {
@@ -34,9 +34,6 @@
     "name": "Orion Gunning"
   },
   "license": "MIT",
-  "dependencies": {
-    
-  },
   "devDependencies": {
     "@parcel/transformer-sass": "2.7.0",
     "parcel": "latest",
