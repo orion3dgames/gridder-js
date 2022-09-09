@@ -75,7 +75,7 @@ GridderJS = function() {
             // get expander content
             const innerHtml = await getExpanderContent(el);
             // create navigation
-            let gridderNavigation = createNavigationElements();
+            let gridderNavigation = createNavigationElements(el);
             // create content
             let gridderContent = document.createElement("div");
             gridderContent.classList.add("gridder-content");
@@ -126,26 +126,29 @@ GridderJS = function() {
             let response = await fetch(url);
             return response.text();
         };
-        var createNavigationElements = function() {
+        var createNavigationElements = function(parent) {
+            // create navigation container
+            let el = document.createElement("div");
+            el.classList.add("gridder-navigation");
             // add close button
             let close = document.createElement("a");
             close.classList.add("gridder-close");
             close.innerHTML = "Close";
-            // add prev button
-            let prev = document.createElement("a");
-            prev.classList.add("gridder-prev");
-            prev.innerHTML = "Previous";
-            // add next button
-            let next = document.createElement("a");
-            next.classList.add("gridder-next");
-            next.innerHTML = "Next";
-            // create navigation container
-            let el = document.createElement("div");
-            el.classList.add("gridder-navigation");
-            // put everything together
-            el.appendChild(prev);
-            el.appendChild(next);
             el.appendChild(close);
+            // add prev button
+            if (getPreviousSibling(parent, "." + gridClass)) {
+                let prev = document.createElement("a");
+                prev.classList.add("gridder-prev");
+                prev.innerHTML = "Previous";
+                el.appendChild(prev);
+            }
+            // add next button
+            if (getNextSibling(parent, "." + gridClass)) {
+                let next = document.createElement("a");
+                next.classList.add("gridder-next");
+                next.innerHTML = "Next";
+                el.appendChild(next);
+            }
             return el;
         };
         var initializeNavigationEvents = function(template, parent) {
