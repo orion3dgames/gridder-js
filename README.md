@@ -1,8 +1,5 @@
 # GridderJS 0.0.1
 
-> ⚠ **Warning**
-> Work In Progress: this plugin is in heavy development and syntax may change quite a bit.
-
 ### A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.
 
 We have all searched images on Google, so you probably noticed the interesting expanding preview when you click on a thumbnail. It’s a very nice effect and practical, allowing you quickly see more details without having to reload a new page. This plugin allows you to recreate a similar effect on a thumbnail grid. The idea is to open a preview when clicking on a thumbnail and to show a larger image and some other content like a title, a description and a link
@@ -14,13 +11,14 @@ We have all searched images on Google, so you probably noticed the interesting e
 - Really easy to use and customize
 - Expanding preview with details
 - Smooth Scrolling
+- Static Content / Dynamic (Fetch) Content
 
 ***
 
 ### ROADMAP
-- add the ability to load ajax content when clicking on a grid item
-- add more callbacks
 - add mobile responsive css / js (not sure how to do that yet)
+- add loading in the case of dynamic content
+- lazy loading images in expanded content
 
 ***
 
