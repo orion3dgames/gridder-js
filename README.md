@@ -17,7 +17,6 @@ We have all searched images on Google, so you probably noticed the interesting e
 
 ### ROADMAP
 - add mobile responsive css / js (not sure how to do that yet)
-- add loading in the case of dynamic content
 - lazy loading images in expanded content
 
 ***

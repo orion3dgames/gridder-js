@@ -1,6 +1,6 @@
 {
   "name": "gridder-js",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.",
   "keywords": [
     "js",
