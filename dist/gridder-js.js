@@ -37,6 +37,7 @@ GridderJS = function() {
         //
         /**
      * Inititalize gridder instances
+     * todo: should only be one instance 
      */ var init = function() {
             let nodes = document.querySelectorAll(target);
             debug.log(pluginTitle + " Initializing " + nodes.length + " instance(s)ssssssssssssss", options);
@@ -56,6 +57,21 @@ GridderJS = function() {
                 });
                 // start callback
                 if (typeof options.onStart === "function") options.onStart(parentGrid);
+            }
+        };
+        /**
+     * update gridder based on options
+     */ var refresh = function() {
+            let nodes = document.querySelectorAll(target);
+            for(var i = 0; i < nodes.length; i++){
+                let parentGrid = nodes[i];
+                // init gridder style and css
+                parentGrid.style.display = "grid";
+                parentGrid.style.gridTemplateColumns = "repeat(" + options.columns + ", 1fr)";
+                parentGrid.style.gridAutoFlow = "row dense";
+                parentGrid.style.gap = options.gap + "px";
+                // update expander
+                parentGrid.querySelector("." + expanderClass).style.gridColumn = "1 / span " + options.columns;
             }
         };
         /**
@@ -120,6 +136,8 @@ GridderJS = function() {
             el.classList.remove("active");
             // remove expander bloc
             el.parentNode.querySelector("." + expanderClass).remove();
+            //
+            el.parentNode.classList.remove("hasOpenExpander");
             // close expander callback
             if (typeof options.onClose === "function") options.onClose();
         };
@@ -187,6 +205,7 @@ GridderJS = function() {
             });
         };
         var insertAfter = function(newNode, existingNode) {
+            existingNode.parentNode.classList.add("hasOpenExpander");
             existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
         };
         var getNextSibling = function(elem, selector) {
@@ -215,14 +234,20 @@ GridderJS = function() {
             };
         }();
         /**
-     * A public method
-     */ publicAPIs.doSomething = function() {
-        // Code goes here...
+     * will allow to update current set options
+     */ publicAPIs.update = function(opt) {
+            // update options
+            options = {
+                ...options,
+                ...opt
+            };
+            // reinitialize
+            refresh();
         };
         //
         // Init
         //
-        init(document.querySelectorAll(target));
+        init();
         //
         // Return the Public APIs
         //

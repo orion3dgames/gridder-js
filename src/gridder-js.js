@@ -49,6 +49,7 @@ GridderJS = (function () {
 
     /**
      * Inititalize gridder instances
+     * todo: should only be one instance 
      */
     var init = function () {
 
@@ -82,6 +83,27 @@ GridderJS = (function () {
 
       }
     };
+
+    /**
+     * update gridder based on options
+     */
+    var refresh = function(){
+      let nodes = document.querySelectorAll(target);
+      for (var i = 0; i < nodes.length; i++) {
+
+        let parentGrid = nodes[i];
+
+        // init gridder style and css
+        parentGrid.style.display = 'grid';
+        parentGrid.style.gridTemplateColumns = 'repeat('+options.columns+', 1fr)';
+        parentGrid.style.gridAutoFlow = 'row dense';
+        parentGrid.style.gap = options.gap+'px';
+
+        // update expander
+        parentGrid.querySelector('.'+expanderClass).style.gridColumn = '1 / span '+options.columns;
+
+      }
+    }
 
     /**
      * Open expander
@@ -172,6 +194,9 @@ GridderJS = (function () {
       // remove expander bloc
       el.parentNode.querySelector('.'+expanderClass).remove();
 
+      //
+      el.parentNode.classList.remove('hasOpenExpander');
+
       // close expander callback
       if (typeof(options.onClose) === "function") {
         options.onClose();
@@ -259,6 +284,7 @@ GridderJS = (function () {
     }
 
     var insertAfter = function(newNode, existingNode) {
+      existingNode.parentNode.classList.add('hasOpenExpander');
       existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
     }
 
@@ -291,16 +317,23 @@ GridderJS = (function () {
     }());
 
     /**
-     * A public method
+     * will allow to update current set options
      */
-    publicAPIs.doSomething = function () {
-      // Code goes here...
+    publicAPIs.update = function (opt) {
+
+      // update options
+      options = {...options, ...opt}
+
+ 
+      // reinitialize
+      refresh();
+
     };
 
     //
     // Init
     //
-    init(document.querySelectorAll(target));
+    init();
 
     //
     // Return the Public APIs

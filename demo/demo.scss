@@ -2,34 +2,106 @@
 ////////////////////////////////
 /* DEMO THEME */
 
-.gridder-list{
-  border: 1px solid #EEE;
-  cursor: pointer;
-  &:hover{
-    border: 1px solid #c5c5c5;
-    background: #F7F7F7;
-  }
-  &.active{
-    background-color: #d3d4d4;
-  }
-}
-
 .gridder-show{
-  border: 1px solid #EEE;
-  padding: 15px;
+  width: 100%;
 }
 
-.gridder-navigation{
-  float: right;
-  a{
-    display:inline-block;
-    margin-left: 5px;
-    padding: 5px;
+.gridder.basic{
+  padding: 20px;
+  .gridder-list{
     border: 1px solid #EEE;
     cursor: pointer;
     &:hover{
-      background: #EEE;
+      border: 1px solid #c5c5c5;
+      background: #F7F7F7;
+    }
+    &.active{
+      background-color: #d3d4d4;
+    }
+    img{
+      width: 100%;
+    }
+  }
+
+  .gridder-show{
+    border: 1px solid #EEE;
+    padding: 15px;
+  }
+
+  .gridder-navigation{
+    float: right;
+    a{
+      display:inline-block;
+      margin-left: 5px;
+      padding: 5px;
+      border: 1px solid #EEE;
+      cursor: pointer;
+      &:hover{
+        background: #EEE;
+      }
     }
   }
 }
+
+.gridder.full{
+  padding: 20px;
+  background: #181818;
+  .gridder-list{
+    overflow: hidden;
+    position: relative;
+    height: 250px;
+  }
+  .gridder-list img{
+    width: 100%;
+    height: 250px;
+
+    object-fit: cover;
+    object-position: center;
+  }
+  .gridder-list-details{
+    position: absolute;
+    width: 100%;
+    top: 35%;
+    left: 0x;
+    color: #FFF;
+    text-align: center;
+  }
+  .gridder-show{
+    padding: 20px;
+    color: #FFF;
+    position: relative;
+  }
+
+  .gridder-navigation{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    a{
+      background: #FFF;
+      position: absolute;
+      height: 40px;
+      padding: 10px 5px; 
+      text-decoration: none;
+      color: #000;
+      cursor: pointer;
+      &.gridder-prev{
+        top: 40%;
+        left: 10px;
+      }
+      &.gridder-next{
+        top: 40%;
+        right: 10px;
+      }
+      &.gridder-close{
+        top: 10px;
+        right: 10px;
+      }
+    }
+  }
+
+  &.hasOpenExpander .gridder-list:not(.active){
+    opacity: .2;
+  }
+}
+ 
  
