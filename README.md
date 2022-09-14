@@ -49,17 +49,15 @@ const gridder = new GridderJS("div#myId", { url: "/file/post" });
 Not using a package manager or bundler?:
 
 ```js
-<script src="https://unpkg.com/gridder-js@5/dist/min/gridder-js.min.js"></script>
+<script src="https://unpkg.com/gridder-js@latest/dist/gridder-js-min.js"></script>
 ```
-
-## Usage
 
 1. HTML
 
     ```html
     
     <!-- Gridder navigation -->
-    <div class="gridder">
+    <div class="gridder" id="myId">
 
        <!-- You can load specify which content is loaded by specifying the #ID of the div where the content is  -->
        <div class="gridder-list" data-target="content1"></div>

@@ -1,4 +1,4 @@
-import $86DDh$justextend from "just-extend";
+import $aMZpC$justextend from "just-extend";
 
 
 let $50e97065b94a2e88$var$defaultOptions = {
@@ -45,7 +45,7 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
         this.element.gridderjs = this;
         let elementOptions = (left = $620dfb1f03fa3511$export$2e2bcd8739ae039.optionsForElement(this.element)) != null ? left : {};
         // set options
-        this.options = (0, $86DDh$justextend)(true, {}, (0, $50e97065b94a2e88$export$2e2bcd8739ae039), elementOptions, options != null ? options : {});
+        this.options = (0, $aMZpC$justextend)(true, {}, (0, $50e97065b94a2e88$export$2e2bcd8739ae039), elementOptions, options != null ? options : {});
         // init
         this.#init();
     }
@@ -155,7 +155,7 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
         this.options.open.call(this);
     }
     update(options) {
-        this.options = (0, $86DDh$justextend)(true, {}, this.options, options != null ? options : {});
+        this.options = (0, $aMZpC$justextend)(true, {}, this.options, options != null ? options : {});
         this.#enable();
     }
     destroy() {
@@ -289,4 +289,4 @@ if (typeof jQuery !== "undefined" && jQuery !== null) jQuery.fn.gridderjs = func
 
 
 export {$620dfb1f03fa3511$export$2e2bcd8739ae039 as default, $620dfb1f03fa3511$export$2e2bcd8739ae039 as GridderJS};
-//# sourceMappingURL=gridder-js.js.map
+//# sourceMappingURL=gridder-js.mjs.map
