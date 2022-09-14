@@ -9,6 +9,7 @@
     "expanding",
     "grid"
   ],
+  "homepage": "https://oriongunning.github.io/gridder-js/demo/",
   "source": "src/gridder-js.js",
   "main": "dist/gridder-js.js",
   "module": "dist/gridder-js.mjs",
