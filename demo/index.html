@@ -67,7 +67,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
         <script src="https://unpkg.com/vue@3"></script>
         <script src="api/data.js"></script>
-        <script src="../dist/standalone/gridderjs-global.js"></script>
+        <script src="../dist/gridder-js-min.js"></script>
 
         <script>
             
@@ -91,17 +91,17 @@
                         'gap': 2,
                         'closeText': "<b>X</i>",
                         'init': function(el){
-                            console.log('onStart');
+                            //console.log('onStart');
                         },
                         'open': function(el){
-                            console.log('onOpen');
+                            //console.log('onOpen');
                             var myLazyLoad = new LazyLoad({
                                 container: this.expanderElement
                             });
                         },
                     });
 
-                    console.log(GridderJS.instances);
+                    //console.log(GridderJS.instances);
 
                 },
                 methods: {
