@@ -36,14 +36,20 @@ Use as **ES6 module** (recommended):
 
 ```js
 import { GridderJS } from "gridder-js";
-const gridder = new GridderJS("div#myId", { url: "/file/post" });
+const gridder = new GridderJS("div#myId", {
+    columns: 4,
+    gap: 15
+  });
 ```
 
 or use as **CommonJS module**:
 
 ```js
 const { GridderJS } = require("gridder-js");
-const gridder = new GridderJS("div#myId", { url: "/file/post" });
+const gridder = new GridderJS("div#myId", {
+    columns: 4,
+    gap: 15
+  });
 ```
 
 Not using a package manager or bundler?:
@@ -89,13 +95,7 @@ Not using a package manager or bundler?:
     	// Instantiate the plugin
       new GridderJS('.gridder', {
         columns: 4,
-        gap: 15,
-        nextText: "Next",
-        prevText: "Previous",
-        closeText: "Close",  
-        init: function(){ console.log('onStart callback'); },
-        open: function(){ console.log('onOpen callback'); },
-        close: function(){ console.log('onClose callback'); },
+        gap: 15
       });
     </script>
     ```
