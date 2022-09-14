@@ -1,21 +1,7 @@
-var $f7gn8$justextend = require("just-extend");
+import $86DDh$justextend from "just-extend";
 
-function $parcel$interopDefault(a) {
-  return a && a.__esModule ? a.default : a;
-}
-function $parcel$defineInteropFlag(a) {
-  Object.defineProperty(a, '__esModule', {value: true, configurable: true});
-}
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
 
-$parcel$defineInteropFlag(module.exports);
-
-$parcel$export(module.exports, "default", () => $5802a98cec57ffd5$export$2e2bcd8739ae039);
-$parcel$export(module.exports, "GridderJS", () => $5802a98cec57ffd5$export$2e2bcd8739ae039);
-
-let $c0e6ddde1fff56b9$var$defaultOptions = {
+let $50e97065b94a2e88$var$defaultOptions = {
     // number of columns
     columns: 4,
     // the gap between the columns
@@ -39,10 +25,10 @@ let $c0e6ddde1fff56b9$var$defaultOptions = {
     // Called when gridder expander is closed
     close () {}
 };
-var $c0e6ddde1fff56b9$export$2e2bcd8739ae039 = $c0e6ddde1fff56b9$var$defaultOptions;
+var $50e97065b94a2e88$export$2e2bcd8739ae039 = $50e97065b94a2e88$var$defaultOptions;
 
 
-class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
+class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
     static initClass() {}
     constructor(el, options){
         let left;
@@ -54,12 +40,12 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         if (typeof this.element === "string") this.element = document.querySelector(this.element);
         if (this.element.gridderjs) throw new Error("GridderJS already attached.");
         // Now add this gridder to the global instances.
-        $5802a98cec57ffd5$export$2e2bcd8739ae039.instances.push(this);
+        $620dfb1f03fa3511$export$2e2bcd8739ae039.instances.push(this);
         // Put the gridder inside the element itself.
         this.element.gridderjs = this;
-        let elementOptions = (left = $5802a98cec57ffd5$export$2e2bcd8739ae039.optionsForElement(this.element)) != null ? left : {};
+        let elementOptions = (left = $620dfb1f03fa3511$export$2e2bcd8739ae039.optionsForElement(this.element)) != null ? left : {};
         // set options
-        this.options = (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, (0, $c0e6ddde1fff56b9$export$2e2bcd8739ae039), elementOptions, options != null ? options : {});
+        this.options = (0, $86DDh$justextend)(true, {}, (0, $50e97065b94a2e88$export$2e2bcd8739ae039), elementOptions, options != null ? options : {});
         // init
         this.#init();
     }
@@ -169,13 +155,13 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         this.options.open.call(this);
     }
     update(options) {
-        this.options = (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, this.options, options != null ? options : {});
+        this.options = (0, $86DDh$justextend)(true, {}, this.options, options != null ? options : {});
         this.#enable();
     }
     destroy() {
         this.#disable();
         delete this.element.gridderjs;
-        return $5802a98cec57ffd5$export$2e2bcd8739ae039.instances.splice($5802a98cec57ffd5$export$2e2bcd8739ae039.instances.indexOf(this), 1);
+        return $620dfb1f03fa3511$export$2e2bcd8739ae039.instances.splice($620dfb1f03fa3511$export$2e2bcd8739ae039.instances.indexOf(this), 1);
     }
     //////////////////////////////////////////
     #insertExpander = function(el) {
@@ -285,21 +271,22 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         }
     };
 }
-$5802a98cec57ffd5$export$2e2bcd8739ae039.options = {};
+$620dfb1f03fa3511$export$2e2bcd8739ae039.options = {};
 // Returns the options for an element or undefined if none available.
-$5802a98cec57ffd5$export$2e2bcd8739ae039.optionsForElement = function(element) {
+$620dfb1f03fa3511$export$2e2bcd8739ae039.optionsForElement = function(element) {
     // Get the `GridderJS.options.elementId` for this element if it exists
-    if (element.getAttribute("id")) return $5802a98cec57ffd5$export$2e2bcd8739ae039.options[camelize(element.getAttribute("id"))];
+    if (element.getAttribute("id")) return $620dfb1f03fa3511$export$2e2bcd8739ae039.options[camelize(element.getAttribute("id"))];
     else return undefined;
 };
 // Holds a list of all gridder instances
-$5802a98cec57ffd5$export$2e2bcd8739ae039.instances = [];
+$620dfb1f03fa3511$export$2e2bcd8739ae039.instances = [];
 // Augment jQuery
 if (typeof jQuery !== "undefined" && jQuery !== null) jQuery.fn.gridderjs = function(options) {
     return this.each(function() {
-        return new $5802a98cec57ffd5$export$2e2bcd8739ae039(this, options);
+        return new $620dfb1f03fa3511$export$2e2bcd8739ae039(this, options);
     });
 };
 
 
+export {$620dfb1f03fa3511$export$2e2bcd8739ae039 as default, $620dfb1f03fa3511$export$2e2bcd8739ae039 as GridderJS};
 //# sourceMappingURL=gridder-js.js.map

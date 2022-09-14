@@ -22,15 +22,39 @@ We have all searched images on Google, so you probably noticed the interesting e
 
 ***
 
+## Quickstart
+
+Install:
+
+```bash
+$ npm install --save gridder-js
+# or with yarn:
+$ yarn add gridder-js
+```
+
+Use as **ES6 module** (recommended):
+
+```js
+import { GridderJS } from "gridder-js";
+const gridder = new GridderJS("div#myId", { url: "/file/post" });
+```
+
+or use as **CommonJS module**:
+
+```js
+const { GridderJS } = require("gridder-js");
+const gridder = new GridderJS("div#myId", { url: "/file/post" });
+```
+
+Not using a package manager or bundler?:
+
+```js
+<script src="https://unpkg.com/gridder-js@5/dist/min/gridder-js.min.js"></script>
+```
+
 ## Usage
 
-1. Include plugin's code:
-
-	```html
-	<script src="dist/gridder-js.js"></script>
-	```
-
-3. HTML
+1. HTML
 
     ```html
     
@@ -60,7 +84,7 @@ We have all searched images on Google, so you probably noticed the interesting e
 
     ```
 
-3. Call the plugin:
+2. Call the plugin:
 
     ```javascript
     <script>
@@ -71,10 +95,9 @@ We have all searched images on Google, so you probably noticed the interesting e
         nextText: "Next",
         prevText: "Previous",
         closeText: "Close",  
-        debug: true
-        onStart: function(){ console.log('onStart callback'); },
-        onOpen: function(){ console.log('onOpen callback'); },
-        onClose: function(){ console.log('onClose callback'); },
+        init: function(){ console.log('onStart callback'); },
+        open: function(){ console.log('onOpen callback'); },
+        close: function(){ console.log('onClose callback'); },
       });
     </script>
     ```

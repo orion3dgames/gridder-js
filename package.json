@@ -1,6 +1,6 @@
 {
   "name": "gridder-js",
-  "version": "0.5.0",
+  "version": "0.5.5",
   "description": "A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.",
   "keywords": [
     "js",
@@ -14,6 +14,13 @@
   "targets": {
     "main": {
       "source": "src/gridder-js.js"
+    },
+    "module": {
+      "source": "src/gridder-js.js"
+    },
+    "standalone": {
+      "source": "tool/gridderjs-global.js",
+      "outputFormat": "global"
     },
     "demo": {
       "source": "demo/demo.scss"
@@ -34,6 +41,9 @@
     "name": "Orion Gunning"
   },
   "license": "MIT",
+  "dependencies": {
+    "just-extend": "^5.0.0"
+  },
   "devDependencies": {
     "@parcel/transformer-sass": "2.7.0",
     "parcel": "latest",
