@@ -13,95 +13,107 @@
     </head>
     <body>
 
-        <div class="container">
+        <div id="app">
 
-            <h1>GridderJS</h1>
+            <div class="container">
 
-            <hr />
-
-            <p class="lead">A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.</p>
-
-            <p>This demo showcases how to use GridderJS with other frameworks, it also shows how to use callback.</p>
-
-            <hr>
-
-            <!-- Gridder navigation -->
-            <div class="gridder-1">
-                <div class="gridder-list" data-target="content1">1</div>
-                <div class="gridder-list" data-target="content2">2</div>
-                <div class="gridder-list" data-target="content3">3</div>
-                <div class="gridder-list" data-target="content4">4</div>
-                <div class="gridder-list" data-target="content5">5</div>
-                <div class="gridder-list" data-target="content6">6</div>
-                <div class="gridder-list" data-url="content.html">7</div>
-            </div>
-
-            <hr />
-            
-            <!-- Gridder navigation -->
-            <div class="gridder-2">
-                <div class="gridder-list" data-target="content8">1</div>
-                <div class="gridder-list" data-target="content9">2</div>
-                <div class="gridder-list" data-target="content10">3</div>
-                <div class="gridder-list" data-target="content11">4</div>
-                <div class="gridder-list" data-target="content12">5</div>
-                <div class="gridder-list" data-target="content13">6</div>
-            </div>
-
-            <!-- Gridder content -->
-            <div id="content1" style="display:none"> Content 1 goes here... </div>
-            <div id="content2" style="display:none"> Content 2 goes here... </div>
-            <div id="content3" style="display:none"> Content 3 goes here... </div>
-            <div id="content4" style="display:none"> Content 4 goes here... </div>
-            <div id="content5" style="display:none"> Content 5 goes here... </div>
-            <div id="content6" style="display:none"> Content 6 goes here... </div>
-
-            <div id="content8" style="display:none"> Content 6 goes here... </div>
-            <div id="content9" style="display:none"> Content 6 goes here... </div>
-            <div id="content10" style="display:none"> Content 6 goes here... </div>
-            <div id="content11" style="display:none"> Content 6 goes here... </div>
-            <div id="content12" style="display:none"> Content 6 goes here... </div>
-            <div id="content13" style="display:none"> Content 6 goes here... </div>
-
-            <hr>
-
-        </div> 
+                <h1>GridderJS</h1>
     
-        <script src="../dist/gridder-js-min.js"></script>
+                <hr />
+    
+                <p class="lead">A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.</p>
+    
+                <p>This demo showcases how to use GridderJS with other frameworks, it also shows how to use callback.</p>
+    
+                <hr>
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary" v-on:click="setTheme('basic', {columns: 8, gap: 20})" :class="{ active: theme == 'basic' }">Theme 1</button>
+                    <button type="button" class="btn btn-primary" v-on:click="setTheme('full', {columns: 5, gap: 2})" :class="{ active: theme == 'full'  }">Theme 2</button>
+                </div>
+
+                <hr>
+
+            </div> 
+
+            <div class="gridder" :class="theme">
+                <div class="gridder-list text-center" v-for="champion in champions.data" :data-target="'content-'+champion.id">
+                    <img :data-src="'https://ddragon.leagueoflegends.com/cdn/9.18.1/img/champion/'+champion.image.full" class="lazy" />
+                    <div class="gridder-list-details">
+                        <strong>{{champion.name}}</strong><br>
+                        <small>{{ champion.title }}</small>
+                    </div>
+                </div>
+                <div class="gridder-list p-2 text-center" :data-url="'content.html'">
+                    <strong>AJAX EXAMPLE</strong><br>
+                    <small>Just to give an example</small>
+                </div>
+            </div>
+            <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
+                <div class="row">      
+                    <img :data-src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.id+'_0.jpg'" class="col-sm-8 lazy" />
+                    <div class="col-sm-4">
+                        <h2>{{champion.name}}</h2>
+                        <p>
+                            {{ champion.blurb }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="api/data.js"></script>
+        <script src="../dist/standalone/gridderjs-global.js"></script>
 
         <script>
-
-            // Instantiate the plugin
-            const gridder = new GridderJS('.gridder-1', {
-                'columns': 5,
-                'gap': 2,
-                'closeText': "<b>X</i>",
-                'init': function(){
-                    console.log('init done', this.element);
-                },
-                'open': function(){
-                    console.log('open event', this.clickedElement, this.expanderElement);
-                },
-            });
-
-            // updating options example
-            gridder.update({gap: 100});
-
-            // Instantiate the plugin
-            var gridder2 = new GridderJS('.gridder-2', {
-                'columns': 4,
-                'gap': 2,
-                'closeText': "<b>X</i>",
-                'init': function(){
-                    console.log('init done', this.element);
-                },
-                'open': function(){
-                    console.log('open event', this.clickedElement, this.expanderElement);
-                },
-            });
-
-            console.log(GridderJS.instances);
             
+            var gridder = null;
+        
+            const { createApp } = Vue
+    
+            createApp({
+                data() {
+                    return {
+                        theme: 'full',
+                        champions: champions
+                    }
+                },
+                mounted() {
+                    var initialLazyLoad = new LazyLoad();
+
+                    // Instantiate the plugin
+                    gridder = new GridderJS('.gridder', {
+                        'columns': 5,
+                        'gap': 2,
+                        'closeText': "<b>X</i>",
+                        'init': function(el){
+                            console.log('onStart');
+                        },
+                        'open': function(el){
+                            console.log('onOpen');
+                            var myLazyLoad = new LazyLoad({
+                                container: this.expanderElement
+                            });
+                        },
+                    });
+
+                    console.log(GridderJS.instances);
+
+                },
+                methods: {
+                    setTheme(value, options) {
+                        this.theme = value;  
+                        gridder.update(options)
+                    }
+                }
+            }).mount('#app')
+        
+            
+
         </script>
     </body>
 </html>

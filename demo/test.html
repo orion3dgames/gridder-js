@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>GridderJS</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link href="../dist/demo/demo.css" rel="stylesheet" id="theme_css">
+
+        
+    </head>
+    <body>
+
+        <div class="container">
+
+            <h1>GridderJS</h1>
+
+            <hr />
+
+            <p class="lead">A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.</p>
+
+            <p>This demo showcases how to use GridderJS with other frameworks, it also shows how to use callback.</p>
+
+            <hr>
+
+            <!-- Gridder navigation -->
+            <div class="gridder-1">
+                <div class="gridder-list" data-target="content1">1</div>
+                <div class="gridder-list" data-target="content2">2</div>
+                <div class="gridder-list" data-target="content3">3</div>
+                <div class="gridder-list" data-target="content4">4</div>
+                <div class="gridder-list" data-target="content5">5</div>
+                <div class="gridder-list" data-target="content6">6</div>
+                <div class="gridder-list" data-url="content.html">7</div>
+            </div>
+
+            <hr />
+            
+            <!-- Gridder navigation -->
+            <div class="gridder-2">
+                <div class="gridder-list" data-target="content8">1</div>
+                <div class="gridder-list" data-target="content9">2</div>
+                <div class="gridder-list" data-target="content10">3</div>
+                <div class="gridder-list" data-target="content11">4</div>
+                <div class="gridder-list" data-target="content12">5</div>
+                <div class="gridder-list" data-target="content13">6</div>
+            </div>
+
+            <!-- Gridder content -->
+            <div id="content1" style="display:none"> Content 1 goes here... </div>
+            <div id="content2" style="display:none"> Content 2 goes here... </div>
+            <div id="content3" style="display:none"> Content 3 goes here... </div>
+            <div id="content4" style="display:none"> Content 4 goes here... </div>
+            <div id="content5" style="display:none"> Content 5 goes here... </div>
+            <div id="content6" style="display:none"> Content 6 goes here... </div>
+
+            <div id="content8" style="display:none"> Content 6 goes here... </div>
+            <div id="content9" style="display:none"> Content 6 goes here... </div>
+            <div id="content10" style="display:none"> Content 6 goes here... </div>
+            <div id="content11" style="display:none"> Content 6 goes here... </div>
+            <div id="content12" style="display:none"> Content 6 goes here... </div>
+            <div id="content13" style="display:none"> Content 6 goes here... </div>
+
+            <hr>
+
+        </div> 
+    
+        <script src="../dist/gridder-js-min.js"></script>
+
+        <script>
+
+            // Instantiate the plugin
+            const gridder = new GridderJS('.gridder-1', {
+                'columns': 5,
+                'gap': 2,
+                'closeText': "<b>X</i>",
+                'init': function(){
+                    console.log('init done', this.element);
+                },
+                'open': function(){
+                    console.log('open event', this.clickedElement, this.expanderElement);
+                },
+            });
+
+            // updating options example
+            gridder.update({gap: 100});
+
+            // Instantiate the plugin
+            var gridder2 = new GridderJS('.gridder-2', {
+                'columns': 4,
+                'gap': 2,
+                'closeText': "<b>X</i>",
+                'init': function(){
+                    console.log('init done', this.element);
+                },
+                'open': function(){
+                    console.log('open event', this.clickedElement, this.expanderElement);
+                },
+            });
+
+            console.log(GridderJS.instances);
+            
+        </script>
+    </body>
+</html>
