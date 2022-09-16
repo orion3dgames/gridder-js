@@ -2,6 +2,9 @@ import $aMZpC$justextend from "just-extend";
 
 
 let $50e97065b94a2e88$var$defaultOptions = {
+    // expander placement
+    // 'right' option is a work in progress
+    display: "bottom",
     // number of columns
     columns: 4,
     // the gap between the columns
@@ -169,10 +172,23 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
         let template = document.createElement("div");
         // style expander
         template.classList.add(this.options.expanderClass);
-        template.style.gridColumn = "1 / span " + this.options.columns;
+        // 
         template.innerHTML = "Loading...";
-        // insert expander
-        this.#insertAfter(template, el);
+        // set css
+        if (this.options.display === "right") {
+            let total_count = this.clickableElements.length;
+            let total_rows = Math.ceil(this.clickableElements.length / this.options.columns);
+            console.log(total_count, total_rows, this.clickableElements.length / this.options.columns);
+            template.style.gridColumn = this.options.columns + 1;
+            template.style.gridRow = " span " + total_rows;
+            this.#insertBefore(template, el);
+        }
+        if (this.options.display === "bottom") {
+            template.style.gridColumn = "1 / span " + this.options.columns;
+            template.style.gridRow = " span 1 ";
+            this.#insertAfter(template, el);
+        }
+        el.parentNode.classList.add("hasOpenExpander");
         return template;
     };
     #close = function(el) {
@@ -250,8 +266,10 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
             }
         });
     };
+    #insertBefore = function(newNode, existingNode) {
+        existingNode.parentNode.prepend(newNode);
+    };
     #insertAfter = function(newNode, existingNode) {
-        existingNode.parentNode.classList.add("hasOpenExpander");
         existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
     };
     #getNextSibling = function(elem, selector) {

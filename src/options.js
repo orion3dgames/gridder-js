@@ -1,5 +1,9 @@
 let defaultOptions = {
 
+    // expander placement
+    // 'right' option is a work in progress
+    display: 'bottom', // 'bottom' or 'right' are available
+
     // number of columns
     columns: 4,
   

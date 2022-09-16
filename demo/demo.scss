@@ -2,8 +2,36 @@
 ////////////////////////////////
 /* DEMO THEME */
 
-.gridder-show{
-  width: 100%;
+
+.gridder.test{
+  .gridder-list{
+    border: 1px solid #EEE;
+    cursor: pointer;
+    &:hover{
+      border: 1px solid #c5c5c5;
+    }
+    &.active{
+      background-color: #d3d4d4;
+    }
+  }
+
+  .gridder-show{
+    border: 1px solid #EEE;
+  }
+
+  .gridder-navigation{
+    float: right;
+    a{
+      display:inline-block;
+      margin-left: 5px;
+      padding: 5px;
+      border: 1px solid #EEE;
+      cursor: pointer;
+      &:hover{
+        background: #EEE;
+      }
+    }
+  }
 }
 
 .gridder.basic{

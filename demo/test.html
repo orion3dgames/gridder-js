@@ -3,13 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>GridderJS</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <link href="../dist/demo/demo.css" rel="stylesheet" id="theme_css">
-
-        
+        <link href="../dist/demo/demo.css" rel="stylesheet">
     </head>
     <body>
 
@@ -26,7 +23,7 @@
             <hr>
 
             <!-- Gridder navigation -->
-            <div class="gridder-1">
+            <div class="gridder gridder-1 test">
                 <div class="gridder-list" data-target="content1">1</div>
                 <div class="gridder-list" data-target="content2">2</div>
                 <div class="gridder-list" data-target="content3">3</div>
@@ -39,7 +36,7 @@
             <hr />
             
             <!-- Gridder navigation -->
-            <div class="gridder-2">
+            <div class="gridder gridder-2 test">
                 <div class="gridder-list" data-target="content8">1</div>
                 <div class="gridder-list" data-target="content9">2</div>
                 <div class="gridder-list" data-target="content10">3</div>
@@ -73,6 +70,7 @@
 
             // Instantiate the plugin
             const gridder = new GridderJS('.gridder-1', {
+                'display': 'right',
                 'columns': 5,
                 'gap': 2,
                 'closeText': "<b>X</i>",
@@ -85,7 +83,7 @@
             });
 
             // updating options example
-            gridder.update({gap: 100});
+            gridder.update({gap: 10});
 
             // Instantiate the plugin
             var gridder2 = new GridderJS('.gridder-2', {
