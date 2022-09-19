@@ -556,6 +556,7 @@ class GridderJS {
         this.listeners = [];
         this.clickedElement = null;
         this.expanderElement = null;
+        this.listElement = null;
         if (typeof this.element === "string") this.element = document.querySelector(this.element);
         if (this.element.gridderjs) throw new Error("GridderJS already attached.");
         // Now add this gridder to the global instances.
@@ -571,9 +572,11 @@ class GridderJS {
     // The function that gets called when GridderJS is initialized. You
     // can (and should) setup event listeners inside this function.
      #init() {
+        //this.element.style.display = 'flex';
+        // GET GRIDDER LIST
+        this.listElement = this.element.querySelector("." + this.options.gridClass);
         // get elements
-        let el;
-        for (el of this.element.querySelectorAll("." + this.options.gridClass))this.clickableElements.push(el);
+        for (let el of this.listElement.children)this.clickableElements.push(el);
         if (this.clickableElements == null || !this.clickableElements.length) throw new Error(`Invalid \`${this.options.gridClass}\` option provided. Please provide a CSS selector, a plain HTML element or a list of those.`);
         //
         this.clickableElements.forEach((clickableElement)=>{
@@ -593,12 +596,16 @@ class GridderJS {
     }
      #enable() {
         // init gridder style and css
-        this.element.style.display = "grid";
-        this.element.style.gridTemplateColumns = "repeat(" + this.options.columns + ", 1fr)";
-        this.element.style.gridAutoFlow = "row dense";
-        this.element.style.gap = this.options.gap + "px";
+        this.listElement.style.width = "100%";
+        this.listElement.style.display = "grid";
+        this.listElement.style.gridTemplateColumns = "repeat(" + this.options.columns + ", 1fr)";
+        this.listElement.style.gridAutoFlow = "row dense";
+        this.listElement.style.gap = this.options.gap + "px";
+        // set explander style if exists
+        let existingExpander = this.element.querySelector("." + this.options.expanderClass);
+        if (existingExpander) this.#setExpanderStyles(existingExpander);
         delete this.disabled;
-        this.clickableElements.forEach((element)=>element.classList.add("g-clickable"));
+        this.clickableElements.forEach((element)=>element.classList.add("gridder-item"));
         return this.#setupEventListeners();
     }
     // Activates all listeners stored in @listeners
@@ -631,20 +638,20 @@ class GridderJS {
     async #open(e) {
         let el1 = e.target;
         // make sure we have the grid item
-        if (!el1.classList.contains("active")) el1 = el1.closest("." + this.options.gridClass);
+        if (!el1.classList.contains(this.options.itemClass)) el1 = el1.closest("." + this.options.itemClass);
         // if same grid item is selected, close it
         if (el1.classList.contains("active")) {
             this.#close(el1);
             return false;
         }
         // then set all as inactive and activate clicked grid item
-        el1.parentNode.querySelectorAll("." + this.options.gridClass).forEach((div)=>{
+        this.listElement.querySelectorAll("." + this.options.itemClass).forEach((div)=>{
             div.classList.remove("active");
         });
         el1.classList.add("active");
         // close expander first if open
-        let existingExpander = el1.parentNode.querySelector("." + this.options.expanderClass);
-        if (existingExpander) existingExpander.remove();
+        let existingExpander1 = this.element.querySelector("." + this.options.expanderClass);
+        if (existingExpander1) existingExpander1.remove();
         // insert expander
         let template = this.#insertExpander(el1);
         // scroll into view
@@ -683,37 +690,48 @@ class GridderJS {
         return GridderJS.instances.splice(GridderJS.instances.indexOf(this), 1);
     }
     //////////////////////////////////////////
+     #setExpanderStyles(template1) {
+        // set css
+        if (this.options.display === "right") {
+            this.listElement.style.width = "70%";
+            template1.style.width = "30%";
+            template1.style.height = "100vh";
+            template1.style.position = " sticky ";
+            template1.style.top = " 0 ";
+            template1.style.right = " 0 ";
+            template1.style.float = " right ";
+        }
+        if (this.options.display === "bottom") {
+            template1.style.gridColumn = "1 / span " + this.options.columns;
+            template1.style.gridRow = " span 1 ";
+        }
+        template1.style.overflowY = "scroll";
+        template1.style.overflowX = "hidden";
+    }
     #insertExpander = function(el) {
         // create expander
         let template = document.createElement("div");
         // style expander
         template.classList.add(this.options.expanderClass);
         // 
-        template.innerHTML = "Loading...";
-        // set css
-        if (this.options.display === "right") {
-            let total_count = this.clickableElements.length;
-            let total_rows = Math.ceil(this.clickableElements.length / this.options.columns);
-            console.log(total_count, total_rows, this.clickableElements.length / this.options.columns);
-            template.style.gridColumn = this.options.columns + 1;
-            template.style.gridRow = " span " + total_rows;
-            this.#insertBefore(template, el);
-        }
-        if (this.options.display === "bottom") {
-            template.style.gridColumn = "1 / span " + this.options.columns;
-            template.style.gridRow = " span 1 ";
-            this.#insertAfter(template, el);
-        }
-        el.parentNode.classList.add("hasOpenExpander");
+        template.innerHTML = this.options.loadingText;
+        //
+        this.#setExpanderStyles(template);
+        if (this.options.display === "right") this.#insertBefore(template, this.listElement);
+        if (this.options.display === "bottom") this.#insertAfter(template, el);
+        el.parentNode.classList.add(this.options.openExpanderClass);
         return template;
     };
     #close = function(el) {
         // remove grid item active class
         el.classList.remove("active");
         // remove expander bloc
-        el.parentNode.querySelector("." + this.options.expanderClass).remove();
+        this.expanderElement.remove();
         //
         el.parentNode.classList.remove("hasOpenExpander");
+        // remove any unwated styles
+        this.listElement.style.width = "100%";
+        this.update();
         // set base var
         this.clickedElement = null;
         this.expanderElement = null;
@@ -737,14 +755,14 @@ class GridderJS {
         let el = document.createElement("div");
         el.classList.add("gridder-navigation");
         // add prev button
-        if (this.#getPreviousSibling(parent, "." + this.options.gridClass)) {
+        if (this.#getPreviousSibling(parent, "." + this.options.itemClass)) {
             let prev = document.createElement("a");
             prev.classList.add("gridder-prev");
             prev.innerHTML = this.options.prevText;
             el.appendChild(prev);
         }
         // add next button
-        if (this.#getNextSibling(parent, "." + this.options.gridClass)) {
+        if (this.#getNextSibling(parent, "." + this.options.itemClass)) {
             let next = document.createElement("a");
             next.classList.add("gridder-next");
             next.innerHTML = this.options.nextText;
@@ -763,7 +781,7 @@ class GridderJS {
         });
         let next = template.querySelector(".gridder-next");
         if (next) next.addEventListener("click", ()=>{
-            let target = this.#getNextSibling(parent, "." + this.options.gridClass);
+            let target = this.#getNextSibling(parent, "." + this.options.itemClass);
             if (target) {
                 const event = new Event("click", {
                     bubbles: true
@@ -773,7 +791,7 @@ class GridderJS {
         });
         let prev = template.querySelector(".gridder-prev");
         if (prev) prev.addEventListener("click", ()=>{
-            let target = this.#getPreviousSibling(parent, "." + this.options.gridClass);
+            let target = this.#getPreviousSibling(parent, "." + this.options.itemClass);
             if (target) {
                 const event = new Event("click", {
                     bubbles: true
@@ -927,9 +945,12 @@ let defaultOptions = {
     nextText: "Next",
     prevText: "Previous",
     closeText: "Close",
+    loadingText: "Loading...",
     // elements classes
     gridClass: "gridder-list",
+    itemClass: "gridder-item",
     expanderClass: "gridder-show",
+    openExpanderClass: "hasOpenExpander",
     // Called when gridder instance is ready
     init () {},
     // Called when gridder instance is open

@@ -16,11 +16,15 @@ let defaultOptions = {
     // navigation text
     nextText: "Next",
     prevText: "Previous",
-    closeText: "Close",   
+    closeText: "Close", 
+    loadingText: "Loading...",
+
 
     // elements classes
     gridClass: "gridder-list",
+    itemClass: "gridder-item",
     expanderClass: "gridder-show",
+    openExpanderClass: "hasOpenExpander",
 
     // Called when gridder instance is ready
     init() {},

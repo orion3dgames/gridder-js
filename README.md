@@ -64,18 +64,18 @@ Not using a package manager or bundler?:
     
     <!-- Gridder navigation -->
     <div class="gridder" id="myId">
-
+      <div class="gridder-list">
        <!-- You can load specify which content is loaded by specifying the #ID of the div where the content is  -->
-       <div class="gridder-list" data-target="content1"></div>
-       <div class="gridder-list" data-target="content2"></div>
-       <div class="gridder-list" data-target="content3"></div>
-       <div class="gridder-list" data-target="content4"></div>
-       <div class="gridder-list" data-target="content5"></div>
-       <div class="gridder-list" data-target="content6"></div>
+       <div data-target="content1"></div>
+       <div data-target="content2"></div>
+       <div data-target="content3"></div>
+       <div data-target="content4"></div>
+       <div data-target="content5"></div>
+       <div data-target="content6"></div>
 
        <!-- You can specify data-url to load ajax content using fetch -->
-       <div class="gridder-list" :data-url="'content.html'"></div>
-
+       <div :data-url="'content.html'"></div>
+      </div>
     </div>
 
     <!-- Gridder content -->

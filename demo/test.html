@@ -24,25 +24,28 @@
 
             <!-- Gridder navigation -->
             <div class="gridder gridder-1 test">
-                <div class="gridder-list" data-target="content1">1</div>
-                <div class="gridder-list" data-target="content2">2</div>
-                <div class="gridder-list" data-target="content3">3</div>
-                <div class="gridder-list" data-target="content4">4</div>
-                <div class="gridder-list" data-target="content5">5</div>
-                <div class="gridder-list" data-target="content6">6</div>
-                <div class="gridder-list" data-url="content.html">7</div>
+                <div class="gridder-list">
+                    <div data-target="content1">1</div>
+                    <div data-target="content2">2</div>
+                    <div data-target="content3">3</div>
+                    <div data-target="content4">4</div>
+                    <div data-target="content5">5</div>
+                    <div data-target="content6">6</div>
+                    <div data-url="content.html">7</div>
+                </div>
             </div>
 
             <hr />
             
             <!-- Gridder navigation -->
             <div class="gridder gridder-2 test">
-                <div class="gridder-list" data-target="content8">1</div>
-                <div class="gridder-list" data-target="content9">2</div>
-                <div class="gridder-list" data-target="content10">3</div>
-                <div class="gridder-list" data-target="content11">4</div>
-                <div class="gridder-list" data-target="content12">5</div>
-                <div class="gridder-list" data-target="content13">6</div>
+                <div class="gridder-list">
+                    <div data-target="content8">8</div>
+                    <div data-target="content9">9</div>
+                    <div data-target="content10">10</div>
+                    <div data-target="content11">11</div>
+                    <div data-target="content12">12</div>
+                </div>
             </div>
 
             <!-- Gridder content -->
@@ -53,12 +56,11 @@
             <div id="content5" style="display:none"> Content 5 goes here... </div>
             <div id="content6" style="display:none"> Content 6 goes here... </div>
 
-            <div id="content8" style="display:none"> Content 6 goes here... </div>
-            <div id="content9" style="display:none"> Content 6 goes here... </div>
-            <div id="content10" style="display:none"> Content 6 goes here... </div>
-            <div id="content11" style="display:none"> Content 6 goes here... </div>
-            <div id="content12" style="display:none"> Content 6 goes here... </div>
-            <div id="content13" style="display:none"> Content 6 goes here... </div>
+            <div id="content8" style="display:none"> Content 8 goes here... </div>
+            <div id="content9" style="display:none"> Content 9 goes here... </div>
+            <div id="content10" style="display:none"> Content 10 goes here... </div>
+            <div id="content11" style="display:none"> Content 11 goes here... </div>
+            <div id="content12" style="display:none"> Content 12 goes here... </div>
 
             <hr>
 
@@ -70,7 +72,7 @@
 
             // Instantiate the plugin
             const gridder = new GridderJS('.gridder-1', {
-                'display': 'right',
+                'display': 'bottom',
                 'columns': 5,
                 'gap': 2,
                 'closeText': "<b>X</i>",

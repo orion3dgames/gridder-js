@@ -34,9 +34,9 @@
   }
 }
 
-.gridder.basic{
+.gridder.theme_1{
   padding: 20px;
-  .gridder-list{
+  .gridder-item{
     border: 1px solid #EEE;
     cursor: pointer;
     &:hover{
@@ -71,15 +71,15 @@
   }
 }
 
-.gridder.full{
+.gridder.theme_2{
   padding: 20px;
   background: #181818;
-  .gridder-list{
+  .gridder-item{
     overflow: hidden;
     position: relative;
     height: 250px;
   }
-  .gridder-list img{
+  .gridder-item img{
     width: 100%;
     height: 250px;
 
@@ -127,7 +127,7 @@
     }
   }
 
-  &.hasOpenExpander .gridder-list:not(.active){
+  &.hasOpenExpander .gridder-item:not(.active){
     opacity: .2;
   }
 }

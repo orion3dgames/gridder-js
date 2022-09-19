@@ -13,6 +13,7 @@ export default class GridderJS {
     this.listeners = [];
     this.clickedElement = null;
     this.expanderElement = null;
+    this.listElement = null;
 
     if (typeof this.element === "string") {
       this.element = document.querySelector(this.element);
@@ -48,9 +49,13 @@ export default class GridderJS {
   // can (and should) setup event listeners inside this function.
   #init() {
 
+    //this.element.style.display = 'flex';
+
+    // GET GRIDDER LIST
+    this.listElement = this.element.querySelector('.'+this.options.gridClass)
+
     // get elements
-    let el;
-    for (el of this.element.querySelectorAll('.'+this.options.gridClass)) {
+    for (let el of this.listElement.children) {
         this.clickableElements.push(el);
     }
 
@@ -81,14 +86,21 @@ export default class GridderJS {
 
   #enable() {
     // init gridder style and css
-    this.element.style.display = 'grid';
-    this.element.style.gridTemplateColumns = 'repeat('+this.options.columns+', 1fr)';
-    this.element.style.gridAutoFlow = 'row dense';
-    this.element.style.gap = this.options.gap+'px';
+    this.listElement.style.width = '100%';
+    this.listElement.style.display = 'grid';
+    this.listElement.style.gridTemplateColumns = 'repeat('+this.options.columns+', 1fr)';
+    this.listElement.style.gridAutoFlow = 'row dense';
+    this.listElement.style.gap = this.options.gap+'px';
 
+    // set explander style if exists
+    let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
+    if(existingExpander){
+      this.#setExpanderStyles(existingExpander);
+    }
+    
     delete this.disabled;
     this.clickableElements.forEach((element) =>
-      element.classList.add("g-clickable")
+      element.classList.add("gridder-item")
     );
     return this.#setupEventListeners();
   }
@@ -136,8 +148,8 @@ export default class GridderJS {
     let el = e.target;
 
     // make sure we have the grid item
-    if(!el.classList.contains('active')){
-    el = el.closest('.'+this.options.gridClass);
+    if(!el.classList.contains(this.options.itemClass)){
+      el = el.closest('.'+this.options.itemClass);
     }
 
     // if same grid item is selected, close it
@@ -147,13 +159,13 @@ export default class GridderJS {
     }
     
     // then set all as inactive and activate clicked grid item
-    el.parentNode.querySelectorAll('.'+this.options.gridClass).forEach( div => {
+    this.listElement.querySelectorAll('.'+this.options.itemClass).forEach( div => {
         div.classList.remove('active');
     });
     el.classList.add('active');
 
     // close expander first if open
-    let existingExpander = el.parentNode.querySelector('.'+this.options.expanderClass);
+    let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
     if(existingExpander){
     existingExpander.remove();
     }
@@ -208,6 +220,27 @@ export default class GridderJS {
   }
 
   //////////////////////////////////////////
+
+  #setExpanderStyles(template) {
+    // set css
+    if(this.options.display === 'right'){
+      this.listElement.style.width = "70%";
+      template.style.width = "30%";
+      template.style.height = "100vh";
+      template.style.position = ' sticky ';
+      template.style.top = ' 0 ';
+      template.style.right = ' 0 ';
+      template.style.float = ' right ';
+    }
+
+    if(this.options.display === 'bottom'){
+      template.style.gridColumn = '1 / span '+this.options.columns;
+      template.style.gridRow = ' span 1 ';
+    }
+    template.style.overflowY = 'scroll';
+    template.style.overflowX = 'hidden';
+  }
+
   #insertExpander = function (el) {
 
     // create expander
@@ -217,27 +250,19 @@ export default class GridderJS {
     template.classList.add(this.options.expanderClass);
 
     // 
-    template.innerHTML = "Loading...";
+    template.innerHTML = this.options.loadingText;
 
-    // set css
+    //
+    this.#setExpanderStyles(template);
     if(this.options.display === 'right'){
-      let total_count = this.clickableElements.length;
-      let total_rows = Math.ceil(this.clickableElements.length / this.options.columns);
-      console.log(total_count, total_rows, this.clickableElements.length / this.options.columns);
-      template.style.gridColumn = this.options.columns + 1;
-      template.style.gridRow = ' span '+total_rows;
-
-      this.#insertBefore(template, el);
+      this.#insertBefore(template, this.listElement);
     }
 
     if(this.options.display === 'bottom'){
-      template.style.gridColumn = '1 / span '+this.options.columns;
-      template.style.gridRow = ' span 1 ';
-
       this.#insertAfter(template, el);
     }
 
-    el.parentNode.classList.add('hasOpenExpander');
+    el.parentNode.classList.add(this.options.openExpanderClass);
  
     return template;
   }
@@ -248,10 +273,14 @@ export default class GridderJS {
     el.classList.remove('active');
 
     // remove expander bloc
-    el.parentNode.querySelector('.'+this.options.expanderClass).remove();
+    this.expanderElement.remove();
 
     //
     el.parentNode.classList.remove('hasOpenExpander');
+
+    // remove any unwated styles
+    this.listElement.style.width = '100%';
+    this.update();
 
     // set base var
     this.clickedElement = null;
@@ -285,7 +314,7 @@ export default class GridderJS {
     el.classList.add('gridder-navigation');
 
     // add prev button
-    if(this.#getPreviousSibling(parent, '.'+this.options.gridClass)){
+    if(this.#getPreviousSibling(parent, '.'+this.options.itemClass)){
       let prev = document.createElement('a');
       prev.classList.add('gridder-prev');
       prev.innerHTML = this.options.prevText;
@@ -293,7 +322,7 @@ export default class GridderJS {
     }
 
     // add next button
-    if(this.#getNextSibling(parent, '.'+this.options.gridClass)){
+    if(this.#getNextSibling(parent, '.'+this.options.itemClass)){
       let next = document.createElement('a');
       next.classList.add('gridder-next');
       next.innerHTML = this.options.nextText;
@@ -318,7 +347,7 @@ export default class GridderJS {
     let next = template.querySelector('.gridder-next');
     if(next){
       next.addEventListener('click', () => {
-        let target = this.#getNextSibling(parent, '.'+this.options.gridClass);
+        let target = this.#getNextSibling(parent, '.'+this.options.itemClass);
         if(target) {
           const event = new Event('click', {bubbles: true});
           target.dispatchEvent(event);
@@ -329,7 +358,7 @@ export default class GridderJS {
     let prev = template.querySelector('.gridder-prev');
     if(prev){
       prev.addEventListener('click', () => {
-        let target = this.#getPreviousSibling(parent, '.'+this.options.gridClass);
+        let target = this.#getPreviousSibling(parent, '.'+this.options.itemClass);
         if(target) {
           const event = new Event('click', {bubbles: true});
           target.dispatchEvent(event);
