@@ -6,19 +6,19 @@ We have all searched images on Google, so you probably noticed the interesting e
 
 ***
 
-### FEATURES
+## Features
 - Multiple instances
-- Really easy to use and customize
-- Expanding preview with details
+- Really easy to use and customize with CSS & HTML
+- Expanding preview with static content or dynamic (fetch) content
 - Smooth Scrolling
-- Static Content / Dynamic (Fetch) Content
+- Old / new google images display (expander underneath grid or as a sidebard on the right hand side)
+- Lightweight (10kb gzipped)
 
 ***
 
-### ROADMAP
-- add mobile responsive css / js (not sure how to do that yet)
-- lazy loading images in expanded content
-- themes
+## Options
+- [⚙️ `src/options.js`](https://github.com/oriongunning/gridder-js/blob/main/src/options.js)
+  for all available options
 
 ***
 
