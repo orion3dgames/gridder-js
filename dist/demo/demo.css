@@ -1,13 +1,16 @@
-.gridder.test .gridder-list {
+.gridder.test .gridder-item {
+  height: 150px;
+  text-align: center;
+  vertical-align: middle;
   cursor: pointer;
   border: 1px solid #eee;
 }
 
-.gridder.test .gridder-list:hover {
+.gridder.test .gridder-item:hover {
   border: 1px solid #c5c5c5;
 }
 
-.gridder.test .gridder-list.active {
+.gridder.test .gridder-item.active {
   background-color: #d3d4d4;
 }
 
@@ -47,6 +50,7 @@
 
 .gridder.theme_1 .gridder-item.active {
   background-color: #d3d4d4;
+  padding: 10px;
 }
 
 .gridder.theme_1 .gridder-item img {

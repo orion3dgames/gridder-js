@@ -72,9 +72,9 @@
 
             // Instantiate the plugin
             const gridder = new GridderJS('.gridder-1', {
-                'display': 'bottom',
+                'display': 'right',
                 'columns': 5,
-                'gap': 2,
+                'gap': 50,
                 'closeText': "<b>X</i>",
                 'init': function(){
                     console.log('init done', this.element);
@@ -85,7 +85,7 @@
             });
 
             // updating options example
-            gridder.update({gap: 10});
+            //gridder.update({gap: 10});
 
             // Instantiate the plugin
             var gridder2 = new GridderJS('.gridder-2', {

@@ -140,6 +140,9 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         let el1 = e.target;
         // make sure we have the grid item
         if (!el1.classList.contains(this.options.itemClass)) el1 = el1.closest("." + this.options.itemClass);
+        // close expander first if open
+        let existingExpander1 = this.element.querySelector("." + this.options.expanderClass);
+        if (existingExpander1) this.#close(el1);
         // if same grid item is selected, close it
         if (el1.classList.contains("active")) {
             this.#close(el1);
@@ -150,17 +153,8 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
             div.classList.remove("active");
         });
         el1.classList.add("active");
-        // close expander first if open
-        let existingExpander1 = this.element.querySelector("." + this.options.expanderClass);
-        if (existingExpander1) existingExpander1.remove();
         // insert expander
         let template = this.#insertExpander(el1);
-        // scroll into view
-        el1.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-            inline: "nearest"
-        });
         // get expander content
         const innerHtml = await this.#getExpanderContent(el1);
         // create navigation
@@ -178,6 +172,19 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         // set base var
         this.clickedElement = el1;
         this.expanderElement = template;
+        // 
+        if (this.options.display === "right") {
+            this._columns = this.options.columns;
+            this.update({
+                columns: this.options.columns - Math.round(this.options.columns / 4)
+            });
+        }
+        // scroll into view
+        if (this.options.display === "bottom") el1.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+        });
         // open callback
         this.options.open.call(this);
     }
@@ -194,8 +201,8 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
      #setExpanderStyles(template1) {
         // set css
         if (this.options.display === "right") {
-            this.listElement.style.width = "70%";
-            template1.style.width = "30%";
+            this.listElement.style.width = "65%";
+            template1.style.width = " calc(35% - " + this.options.gap + "px)";
             template1.style.height = "100vh";
             template1.style.position = " sticky ";
             template1.style.top = " 0 ";
@@ -236,6 +243,10 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         // set base var
         this.clickedElement = null;
         this.expanderElement = null;
+        // 
+        if (this.options.display === "right") this.update({
+            columns: this._columns
+        });
         // close expander callback
         this.options.close.call(el);
     };

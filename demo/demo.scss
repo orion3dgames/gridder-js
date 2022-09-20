@@ -4,8 +4,11 @@
 
 
 .gridder.test{
-  .gridder-list{
+  .gridder-item{
     border: 1px solid #EEE;
+    height: 150px;
+    text-align: center;
+    vertical-align: middle;
     cursor: pointer;
     &:hover{
       border: 1px solid #c5c5c5;
@@ -45,6 +48,7 @@
     }
     &.active{
       background-color: #d3d4d4;
+      padding: 10px;
     }
     img{
       width: 100%;

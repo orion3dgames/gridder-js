@@ -152,6 +152,12 @@ export default class GridderJS {
       el = el.closest('.'+this.options.itemClass);
     }
 
+    // close expander first if open
+    let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
+    if(existingExpander){
+      this.#close(el); 
+    }
+
     // if same grid item is selected, close it
     if(el.classList.contains('active')){
         this.#close(el);  
@@ -164,17 +170,8 @@ export default class GridderJS {
     });
     el.classList.add('active');
 
-    // close expander first if open
-    let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
-    if(existingExpander){
-    existingExpander.remove();
-    }
-
     // insert expander
     let template = this.#insertExpander(el);
-
-    // scroll into view
-    el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 
     // get expander content
     const innerHtml = await this.#getExpanderContent(el);
@@ -198,6 +195,17 @@ export default class GridderJS {
     // set base var
     this.clickedElement = el;
     this.expanderElement = template;
+
+    // 
+    if(this.options.display === 'right'){
+      this._columns = this.options.columns;
+      this.update({ columns: this.options.columns - Math.round(this.options.columns/4) })
+    }
+
+    // scroll into view
+    if(this.options.display === 'bottom'){
+      el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    }
 
     // open callback
     this.options.open.call(this)
@@ -224,8 +232,8 @@ export default class GridderJS {
   #setExpanderStyles(template) {
     // set css
     if(this.options.display === 'right'){
-      this.listElement.style.width = "70%";
-      template.style.width = "30%";
+      this.listElement.style.width = "65%";
+      template.style.width = " calc(35% - "+this.options.gap+"px)";
       template.style.height = "100vh";
       template.style.position = ' sticky ';
       template.style.top = ' 0 ';
@@ -285,6 +293,11 @@ export default class GridderJS {
     // set base var
     this.clickedElement = null;
     this.expanderElement = null;
+
+     // 
+     if(this.options.display === 'right'){
+      this.update({ columns: this._columns })
+    }
 
     // close expander callback
     this.options.close.call(el)
