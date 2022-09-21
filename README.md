@@ -13,8 +13,9 @@ We have all searched images on Google, so you probably noticed the interesting e
 - Multiple instances
 - Really easy to use and customize with CSS & HTML
 - Expanding preview with static content or dynamic (fetch) content
+- Responsive
 - Smooth Scrolling
-- Old / new google images display (expander underneath grid or as a sidebard on the right hand side)
+- Old / New Google Images display (expander underneath grid or as a sidebard on the right hand side)
 - Lightweight (10kb gzipped)
 
 ***
