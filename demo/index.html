@@ -38,9 +38,8 @@
                     </div>
                     <div class="form-floating me-3">
                         <select class="form-select" v-model="update_theme">
-                            <option value="">Choose...</option>
+                            <option value="">No Theme</option>
                             <option value="theme_1">Theme 1</option>
-                            <option value="theme_2">Theme 2</option>
                         </select>
                         <label>Theme</label>
                     </div>
@@ -75,20 +74,34 @@
                 </div>
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
-                <div class="row">      
-                    <img :data-src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.id+'_0.jpg'" class="col lazy" />
-                    <div class="col">
-                        <h2>{{champion.name}}</h2>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                        <p>{{ champion.blurb }}</p>
-                    </div>
+    
+                <img :data-src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.id+'_0.jpg'" class="lazy" />
+                <div>
+                    <h2>{{champion.name}}</h2>
+                    <hr>
+                    <p>{{champion.blurb}}</p>
+                    <hr>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th v-for="(info, key) in champion.info">{{key}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td v-for="(info, key) in champion.info">{{info}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-sm table-bordered">
+                        <tr v-for="(info, key) in champion.stats">
+                            <th width="30%">{{key}}</td>
+                            <td>{{info}}</td>
+                        </tr>
+                    </table>
                 </div>
+                   
             </div>
         </div>
 

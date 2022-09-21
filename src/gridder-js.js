@@ -85,6 +85,9 @@ export default class GridderJS {
   }
 
   #enable() {
+
+    this.listElement.parentNode.style.display = 'flex';
+
     // init gridder style and css
     this.listElement.style.width = '100%';
     this.listElement.style.display = 'grid';
@@ -152,16 +155,17 @@ export default class GridderJS {
       el = el.closest('.'+this.options.itemClass);
     }
 
-    // close expander first if open
-    let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
-    if(existingExpander){
-      this.#close(el); 
-    }
+    // close expander if open
+    if(this.expanderElement){
 
-    // if same grid item is selected, close it
-    if(el.classList.contains('active')){
+      // if same grid item is selected, close it
+      if(el.classList.contains('active')){
         this.#close(el);  
         return false;
+      }
+
+      // else just close
+      this.#close(el); 
     }
     
     // then set all as inactive and activate clicked grid item
@@ -211,42 +215,25 @@ export default class GridderJS {
     this.options.open.call(this)
   }
 
-  update(options) {
-    this.options = extend(
-        true,
-        {},
-        this.options,
-        options != null ? options : {}
-      );
-      this.#enable();
-  }
-
-  destroy() {
-    this.#disable();
-    delete this.element.gridderjs;
-    return GridderJS.instances.splice(GridderJS.instances.indexOf(this), 1);
-  }
-
-  //////////////////////////////////////////
-
   #setExpanderStyles(template) {
-    // set css
+    // set css for display == right
     if(this.options.display === 'right'){
-      this.listElement.style.width = "65%";
-      template.style.width = " calc(35% - "+this.options.gap+"px)";
-      template.style.height = "100vh";
+      this.listElement.style.flex = "65%";
+      template.style.overscrollBehavior = 'contain' ; /* Prevent SCROLL-CHAINING to parent elements. */
+      template.style.flex = " calc(35% - "+this.options.gap+"px)";
+      //template.style.height = "100vh";
       template.style.position = ' sticky ';
+      template.style.alignSelf = 'flex-start';
       template.style.top = ' 0 ';
-      template.style.right = ' 0 ';
-      template.style.float = ' right ';
+      template.style.marginLeft = this.options.gap+"px";
+      template.style.overflowY = 'scroll';
+      template.style.overflowX = 'hidden';
     }
-
+    // set css for display == bottom
     if(this.options.display === 'bottom'){
       template.style.gridColumn = '1 / span '+this.options.columns;
       template.style.gridRow = ' span 1 ';
-    }
-    template.style.overflowY = 'scroll';
-    template.style.overflowX = 'hidden';
+    } 
   }
 
   #insertExpander = function (el) {
@@ -256,6 +243,7 @@ export default class GridderJS {
 
     // style expander
     template.classList.add(this.options.expanderClass);
+    template.classList.add("gridder-"+this.options.display);
 
     // 
     template.innerHTML = this.options.loadingText;
@@ -263,7 +251,7 @@ export default class GridderJS {
     //
     this.#setExpanderStyles(template);
     if(this.options.display === 'right'){
-      this.#insertBefore(template, this.listElement);
+      this.#insertAfter(template, this.listElement);
     }
 
     if(this.options.display === 'bottom'){
@@ -284,7 +272,7 @@ export default class GridderJS {
     this.expanderElement.remove();
 
     //
-    el.parentNode.classList.remove('hasOpenExpander');
+    el.parentNode.classList.remove(this.options.openExpanderClass);
 
     // remove any unwated styles
     this.listElement.style.width = '100%';
@@ -406,6 +394,24 @@ export default class GridderJS {
       sibling = sibling.previousElementSibling;
     }
   };
+
+  //////////////// PUBLIC METHODS //////////////////
+  
+  update(options) {
+    this.options = extend(
+        true,
+        {},
+        this.options,
+        options != null ? options : {}
+      );
+      this.#enable();
+  }
+
+  destroy() {
+    this.#disable();
+    delete this.element.gridderjs;
+    return GridderJS.instances.splice(GridderJS.instances.indexOf(this), 1);
+  }
     
 }
 

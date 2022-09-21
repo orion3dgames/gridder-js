@@ -24,7 +24,7 @@ let defaultOptions = {
     gridClass: "gridder-list",
     itemClass: "gridder-item",
     expanderClass: "gridder-show",
-    openExpanderClass: "hasOpenExpander",
+    openExpanderClass: "gridder-open",
 
     // Called when gridder instance is ready
     init() {},

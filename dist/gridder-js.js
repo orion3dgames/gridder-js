@@ -34,7 +34,7 @@ let $c0e6ddde1fff56b9$var$defaultOptions = {
     gridClass: "gridder-list",
     itemClass: "gridder-item",
     expanderClass: "gridder-show",
-    openExpanderClass: "hasOpenExpander",
+    openExpanderClass: "gridder-open",
     // Called when gridder instance is ready
     init () {},
     // Called when gridder instance is open
@@ -96,6 +96,7 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         return this.options.init.call(this, this.element);
     }
      #enable() {
+        this.listElement.parentNode.style.display = "flex";
         // init gridder style and css
         this.listElement.style.width = "100%";
         this.listElement.style.display = "grid";
@@ -140,13 +141,15 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         let el1 = e.target;
         // make sure we have the grid item
         if (!el1.classList.contains(this.options.itemClass)) el1 = el1.closest("." + this.options.itemClass);
-        // close expander first if open
-        let existingExpander1 = this.element.querySelector("." + this.options.expanderClass);
-        if (existingExpander1) this.#close(el1);
-        // if same grid item is selected, close it
-        if (el1.classList.contains("active")) {
+        // close expander if open
+        if (this.expanderElement) {
+            // if same grid item is selected, close it
+            if (el1.classList.contains("active")) {
+                this.#close(el1);
+                return false;
+            }
+            // else just close
             this.#close(el1);
-            return false;
         }
         // then set all as inactive and activate clicked grid item
         this.listElement.querySelectorAll("." + this.options.itemClass).forEach((div)=>{
@@ -188,44 +191,37 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         // open callback
         this.options.open.call(this);
     }
-    update(options) {
-        this.options = (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, this.options, options != null ? options : {});
-        this.#enable();
-    }
-    destroy() {
-        this.#disable();
-        delete this.element.gridderjs;
-        return $5802a98cec57ffd5$export$2e2bcd8739ae039.instances.splice($5802a98cec57ffd5$export$2e2bcd8739ae039.instances.indexOf(this), 1);
-    }
-    //////////////////////////////////////////
      #setExpanderStyles(template1) {
-        // set css
+        // set css for display == right
         if (this.options.display === "right") {
-            this.listElement.style.width = "65%";
-            template1.style.width = " calc(35% - " + this.options.gap + "px)";
-            template1.style.height = "100vh";
+            this.listElement.style.flex = "65%";
+            template1.style.overscrollBehavior = "contain"; /* Prevent SCROLL-CHAINING to parent elements. */ 
+            template1.style.flex = " calc(35% - " + this.options.gap + "px)";
+            //template.style.height = "100vh";
             template1.style.position = " sticky ";
+            template1.style.alignSelf = "flex-start";
             template1.style.top = " 0 ";
-            template1.style.right = " 0 ";
-            template1.style.float = " right ";
+            template1.style.marginLeft = this.options.gap + "px";
+            template1.style.overflowY = "scroll";
+            template1.style.overflowX = "hidden";
         }
+        // set css for display == bottom
         if (this.options.display === "bottom") {
             template1.style.gridColumn = "1 / span " + this.options.columns;
             template1.style.gridRow = " span 1 ";
         }
-        template1.style.overflowY = "scroll";
-        template1.style.overflowX = "hidden";
     }
     #insertExpander = function(el) {
         // create expander
         let template = document.createElement("div");
         // style expander
         template.classList.add(this.options.expanderClass);
+        template.classList.add("gridder-" + this.options.display);
         // 
         template.innerHTML = this.options.loadingText;
         //
         this.#setExpanderStyles(template);
-        if (this.options.display === "right") this.#insertBefore(template, this.listElement);
+        if (this.options.display === "right") this.#insertAfter(template, this.listElement);
         if (this.options.display === "bottom") this.#insertAfter(template, el);
         el.parentNode.classList.add(this.options.openExpanderClass);
         return template;
@@ -236,7 +232,7 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         // remove expander bloc
         this.expanderElement.remove();
         //
-        el.parentNode.classList.remove("hasOpenExpander");
+        el.parentNode.classList.remove(this.options.openExpanderClass);
         // remove any unwated styles
         this.listElement.style.width = "100%";
         this.update();
@@ -334,6 +330,16 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
             sibling = sibling.previousElementSibling;
         }
     };
+    //////////////// PUBLIC METHODS //////////////////
+    update(options) {
+        this.options = (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, this.options, options != null ? options : {});
+        this.#enable();
+    }
+    destroy() {
+        this.#disable();
+        delete this.element.gridderjs;
+        return $5802a98cec57ffd5$export$2e2bcd8739ae039.instances.splice($5802a98cec57ffd5$export$2e2bcd8739ae039.instances.indexOf(this), 1);
+    }
 }
 $5802a98cec57ffd5$export$2e2bcd8739ae039.options = {};
 // Returns the options for an element or undefined if none available.
