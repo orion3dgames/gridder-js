@@ -129,6 +129,7 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
         this.listElement.style.gridTemplateColumns = "repeat(" + this.options.columns + ", 1fr)";
         this.listElement.style.gridAutoFlow = "row dense";
         this.listElement.style.gap = this.options.gap + "px";
+        this.listElement.style.gridTemplateRows = "min-content";
         // set explander style if exists
         let existingExpander = this.element.querySelector("." + this.options.expanderClass);
         if (existingExpander) this.#setExpanderStyles(existingExpander);
@@ -214,6 +215,8 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
             block: "start",
             inline: "nearest"
         });
+        //
+        this.#setExpanderStyles(template);
         // open callback
         this.options.open.call(this);
     }
@@ -223,13 +226,13 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
             this.listElement.style.flex = "65%";
             template1.style.overscrollBehavior = "contain"; /* Prevent SCROLL-CHAINING to parent elements. */ 
             template1.style.flex = " calc(35% - " + this.options.gap + "px)";
-            //template.style.height = "100vh";
             template1.style.position = " sticky ";
             template1.style.alignSelf = "flex-start";
             template1.style.top = " 0 ";
             template1.style.marginLeft = this.options.gap + "px";
             template1.style.overflowY = "scroll";
             template1.style.overflowX = "hidden";
+            template1.style.maxHeight = "100vh";
         }
         // set css for display == bottom
         if (this.options.display === "bottom") {
@@ -246,7 +249,6 @@ class $620dfb1f03fa3511$export$2e2bcd8739ae039 {
         // 
         template.innerHTML = this.options.loadingText;
         //
-        this.#setExpanderStyles(template);
         if (this.options.display === "right") this.#insertAfter(template, this.listElement);
         if (this.options.display === "bottom") this.#insertAfter(template, el);
         el.parentNode.classList.add(this.options.openExpanderClass);

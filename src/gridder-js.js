@@ -116,6 +116,7 @@ export default class GridderJS {
     this.listElement.style.gridTemplateColumns = 'repeat('+this.options.columns+', 1fr)';
     this.listElement.style.gridAutoFlow = 'row dense';
     this.listElement.style.gap = this.options.gap+'px';
+    this.listElement.style.gridTemplateRows= 'min-content';
 
     // set explander style if exists
     let existingExpander = this.element.querySelector('.'+this.options.expanderClass);
@@ -233,6 +234,9 @@ export default class GridderJS {
       el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     }
 
+    //
+    this.#setExpanderStyles(template);
+
     // open callback
     this.options.open.call(this)
   }
@@ -243,13 +247,13 @@ export default class GridderJS {
       this.listElement.style.flex = "65%";
       template.style.overscrollBehavior = 'contain' ; /* Prevent SCROLL-CHAINING to parent elements. */
       template.style.flex = " calc(35% - "+this.options.gap+"px)";
-      //template.style.height = "100vh";
       template.style.position = ' sticky ';
       template.style.alignSelf = 'flex-start';
       template.style.top = ' 0 ';
       template.style.marginLeft = this.options.gap+"px";
       template.style.overflowY = 'scroll';
       template.style.overflowX = 'hidden';
+      template.style.maxHeight = '100vh';
     }
     // set css for display == bottom
     if(this.options.display === 'bottom'){
@@ -271,7 +275,6 @@ export default class GridderJS {
     template.innerHTML = this.options.loadingText;
 
     //
-    this.#setExpanderStyles(template);
     if(this.options.display === 'right'){
       this.#insertAfter(template, this.listElement);
     }

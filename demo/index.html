@@ -75,13 +75,16 @@
             </div>
             <div v-for="champion in champions.data" :id="'content-'+champion.id" style="display:none;">
     
-                <img :data-src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.id+'_0.jpg'" class="lazy" />
+                <img :data-src="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'+champion.id+'_0.jpg'" class="lazy mb-3" />
                 <div>
-                    <h2>{{champion.name}}</h2>
+                    <h3>
+                        {{champion.name}} 
+                        <span class="badge bg-primary e-2" v-for="(tag, key) in champion.tags">{{tag}}</span>
+                    </h2>
                     <hr>
                     <p>{{champion.blurb}}</p>
                     <hr>
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-light table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th v-for="(info, key) in champion.info">{{key}}</td>
@@ -94,7 +97,7 @@
                         </tbody>
                     </table>
                     <hr>
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-light table-sm table-bordered">
                         <tr v-for="(info, key) in champion.stats">
                             <th width="30%">{{key}}</td>
                             <td>{{info}}</td>

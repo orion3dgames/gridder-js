@@ -16,7 +16,7 @@ We have all searched images on Google, so you probably noticed the interesting e
 - Responsive
 - Smooth Scrolling
 - Old / New Google Images display (expander underneath grid or as a sidebard on the right hand side)
-- Lightweight (10kb gzipped)
+- Lightweight (2.6 kB gzipped)
 
 ***
 
