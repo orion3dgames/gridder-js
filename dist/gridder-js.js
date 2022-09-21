@@ -16,13 +16,35 @@ $parcel$export(module.exports, "default", () => $5802a98cec57ffd5$export$2e2bcd8
 $parcel$export(module.exports, "GridderJS", () => $5802a98cec57ffd5$export$2e2bcd8739ae039);
 
 let $c0e6ddde1fff56b9$var$defaultOptions = {
+    /*
     // expander placement
-    // 'right' option is a work in progress
-    display: "bottom",
+    'bottom' is how google use to do
+    'right' is how google images does now
+    */ display: "bottom",
     // number of columns
-    columns: 4,
+    columns: 8,
     // the gap between the columns
     gap: 20,
+    /*
+    // breakpoints responsive
+    // must be from highest to lowest width
+    example:
+    breakpoints: {
+        960: {
+            columns: 4,
+            gap: 15,
+        },
+        700: {
+            columns: 3,
+            gap: 5,
+        },
+        400: {
+            columns: 2,
+            gap: 5,
+            display: 'bottom',
+        }
+    },
+    */ breakpoints: {},
     // activate debug logging
     debug: false,
     // navigation text
@@ -58,6 +80,7 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
         this.clickedElement = null;
         this.expanderElement = null;
         this.listElement = null;
+        this.breakpoints = [];
         if (typeof this.element === "string") this.element = document.querySelector(this.element);
         if (this.element.gridderjs) throw new Error("GridderJS already attached.");
         // Now add this gridder to the global instances.
@@ -90,10 +113,27 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
                 }
             });
         });
-        // 
+        // parse breakpoints;
+        this.#parseBreakpoints();
+        // Initial Resize
+        $5802a98cec57ffd5$export$2e2bcd8739ae039.resizeGridder();
+        // Enable Gridder
         this.#enable();
         // init callback
         return this.options.init.call(this, this.element);
+    }
+    // parse breakpoint to be able to use later on each resize
+     #parseBreakpoints() {
+        var _this9 = this;
+        var breakpoints = this.options.breakpoints;
+        this.breakpoints.push([
+            "default",
+            this.options
+        ]);
+        if (breakpoints) for(const width in breakpoints)_this9.breakpoints.push([
+            parseInt(width),
+            (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, _this9.options, breakpoints[width])
+        ]);
     }
      #enable() {
         this.listElement.parentNode.style.display = "flex";
@@ -132,7 +172,7 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
                 return result;
             })());
     }
-    // Disble event
+    // Disable event
      #disable() {
         this.#removeEventListeners();
     }
@@ -332,6 +372,7 @@ class $5802a98cec57ffd5$export$2e2bcd8739ae039 {
     };
     //////////////// PUBLIC METHODS //////////////////
     update(options) {
+        this._options = this.options;
         this.options = (0, ($parcel$interopDefault($f7gn8$justextend)))(true, {}, this.options, options != null ? options : {});
         this.#enable();
     }
@@ -348,6 +389,27 @@ $5802a98cec57ffd5$export$2e2bcd8739ae039.optionsForElement = function(element) {
     if (element.getAttribute("id")) return $5802a98cec57ffd5$export$2e2bcd8739ae039.options[camelize(element.getAttribute("id"))];
     else return undefined;
 };
+// Resize all gridder instances.
+// terrible, but works : to be refactored once I found a way to make it work
+$5802a98cec57ffd5$export$2e2bcd8739ae039.resizeGridder = function() {
+    let wWidth = window.innerWidth;
+    $5802a98cec57ffd5$export$2e2bcd8739ae039.instances.forEach((gridder)=>{
+        // if additional breakpoint specified
+        if (gridder.breakpoints.length < 2) return false;
+        // find closest breakpoint options
+        for(const n in gridder.breakpoints){
+            if (n > 0) {
+                let breakpoint = gridder.breakpoints[n];
+                if (wWidth <= breakpoint[0]) {
+                    gridder.update(breakpoint[1]);
+                    break;
+                }
+            }
+            // else use default
+            gridder.update(gridder.breakpoints[0][1]);
+        }
+    });
+};
 // Holds a list of all gridder instances
 $5802a98cec57ffd5$export$2e2bcd8739ae039.instances = [];
 // Augment jQuery
@@ -356,6 +418,15 @@ if (typeof jQuery !== "undefined" && jQuery !== null) jQuery.fn.gridderjs = func
         return new $5802a98cec57ffd5$export$2e2bcd8739ae039(this, options);
     });
 };
+// Resize Event
+// terrible, but works : to be refactored once I found a way to make it work
+var $5802a98cec57ffd5$var$resizeTimer;
+window.addEventListener("resize", function(e) {
+    clearTimeout($5802a98cec57ffd5$var$resizeTimer);
+    $5802a98cec57ffd5$var$resizeTimer = setTimeout(function() {
+        $5802a98cec57ffd5$export$2e2bcd8739ae039.resizeGridder();
+    }, 500);
+});
 
 
 //# sourceMappingURL=gridder-js.js.map

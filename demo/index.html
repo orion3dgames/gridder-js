@@ -136,6 +136,17 @@
                         'display': 'right',
                         'columns': 8,
                         'gap': 15,
+                        breakpoints: {
+                            960: {
+                                columns: 4,
+                                gap: 15,
+                            },
+                            500: {
+                                columns: 2,
+                                gap: 5,
+                                display: 'bottom',
+                            }
+                        },
                         'closeText': "<b>X</i>",
                         'init': function(el){
                             //console.log('onStart');

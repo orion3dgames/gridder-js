@@ -66,15 +66,24 @@
 
             // Instantiate the plugin
             const gridder = new GridderJS('.gridder-1', {
-                'display': 'right',
-                'columns': 5,
-                'gap': 50,
-                'closeText': "<b>X</i>",
-                'init': function(){
-                    console.log('init done', this.element);
-                },
-                'open': function(){
-                    console.log('open event', this.clickedElement, this.expanderElement);
+                display: 'right',
+                columns: 6,
+                gap: 20,
+                breakpoints: {
+                    960: {
+                        columns: 4,
+                        gap: 15,
+                    },
+                    700: {
+                        columns: 3,
+                        gap: 5,
+                        display: 'bottom',
+                    },
+                    400: {
+                        columns: 2,
+                        gap: 5,
+                        display: 'bottom',
+                    }
                 },
             });
 

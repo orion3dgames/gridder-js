@@ -1,14 +1,39 @@
 let defaultOptions = {
 
+    /*
     // expander placement
-    // 'right' option is a work in progress
-    display: 'bottom', // 'bottom' or 'right' are available
+    'bottom' is how google use to do
+    'right' is how google images does now
+    */
+    display: 'bottom',
 
     // number of columns
-    columns: 4,
+    columns: 8,
   
     // the gap between the columns
     gap: 20,
+
+    /*
+    // breakpoints responsive
+    // must be from highest to lowest width
+    example:
+    breakpoints: {
+        960: {
+            columns: 4,
+            gap: 15,
+        },
+        700: {
+            columns: 3,
+            gap: 5,
+        },
+        400: {
+            columns: 2,
+            gap: 5,
+            display: 'bottom',
+        }
+    },
+    */
+    breakpoints: {},
   
     // activate debug logging
     debug: false,

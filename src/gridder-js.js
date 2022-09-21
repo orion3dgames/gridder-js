@@ -14,6 +14,7 @@ export default class GridderJS {
     this.clickedElement = null;
     this.expanderElement = null;
     this.listElement = null;
+    this.breakpoints = [];
 
     if (typeof this.element === "string") {
       this.element = document.querySelector(this.element);
@@ -77,11 +78,32 @@ export default class GridderJS {
         });
     });
 
-    // 
+    // parse breakpoints;
+    this.#parseBreakpoints();
+
+    // Initial Resize
+    GridderJS.resizeGridder();
+
+    // Enable Gridder
     this.#enable();
 
     // init callback
     return this.options.init.call(this, this.element);
+  }
+
+  // parse breakpoint to be able to use later on each resize
+  #parseBreakpoints(){
+    var _this9 = this;
+    var breakpoints = this.options.breakpoints;
+    this.breakpoints.push(["default", this.options]);
+    if (breakpoints) {
+      for (const width in breakpoints) {
+        _this9.breakpoints.push([
+          parseInt(width),
+          extend(true, {}, _this9.options, breakpoints[width])
+        ]);
+      };
+    }
   }
 
   #enable() {
@@ -100,7 +122,7 @@ export default class GridderJS {
     if(existingExpander){
       this.#setExpanderStyles(existingExpander);
     }
-    
+
     delete this.disabled;
     this.clickableElements.forEach((element) =>
       element.classList.add("gridder-item")
@@ -140,7 +162,7 @@ export default class GridderJS {
     );
   }
 
-  // Disble event
+  // Disable event
   #disable() {
     this.#removeEventListeners();
   }
@@ -398,6 +420,7 @@ export default class GridderJS {
   //////////////// PUBLIC METHODS //////////////////
   
   update(options) {
+    this._options = this.options;
     this.options = extend(
         true,
         {},
@@ -427,6 +450,28 @@ GridderJS.optionsForElement = function (element) {
   }
 };
 
+// Resize all gridder instances.
+// terrible, but works : to be refactored once I found a way to make it work
+GridderJS.resizeGridder = function () {
+  let wWidth = window.innerWidth;
+  GridderJS.instances.forEach((gridder) => {
+    // if additional breakpoint specified
+    if(gridder.breakpoints.length < 2) return false;
+    // find closest breakpoint options
+    for(const n in gridder.breakpoints) {
+      if(n > 0){
+        let breakpoint = gridder.breakpoints[n];
+        if(wWidth <= breakpoint[0]){
+          gridder.update(breakpoint[1]);
+          break;
+        }
+      }
+      // else use default
+      gridder.update(gridder.breakpoints[0][1]);
+    };
+  });
+};
+
 // Holds a list of all gridder instances
 GridderJS.instances = [];
 
@@ -438,5 +483,15 @@ if (typeof jQuery !== "undefined" && jQuery !== null) {
         });
     };
 }
+
+// Resize Event
+// terrible, but works : to be refactored once I found a way to make it work
+var resizeTimer;
+window.addEventListener('resize', function(e){
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+    GridderJS.resizeGridder();     
+  }, 500);  
+});
 
 export { GridderJS };
