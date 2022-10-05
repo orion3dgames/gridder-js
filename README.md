@@ -1,6 +1,5 @@
 # GridderJS
 
-> **⚠ WARNING**: This plugin is in heavy development, use with caution!
 ---
 
 ### A JS plugin that displays a thumbnail grid expanding preview similar to the effect seen on Google Images.
