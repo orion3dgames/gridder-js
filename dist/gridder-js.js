@@ -388,7 +388,7 @@ $5802a98cec57ffd5$export$2e2bcd8739ae039.options = {};
 // Returns the options for an element or undefined if none available.
 $5802a98cec57ffd5$export$2e2bcd8739ae039.optionsForElement = function(element) {
     // Get the `GridderJS.options.elementId` for this element if it exists
-    if (element.getAttribute("id")) return $5802a98cec57ffd5$export$2e2bcd8739ae039.options[camelize(element.getAttribute("id"))];
+    if (element.getAttribute("id")) return $5802a98cec57ffd5$export$2e2bcd8739ae039.options[element.getAttribute("id")];
     else return undefined;
 };
 // Resize all gridder instances.

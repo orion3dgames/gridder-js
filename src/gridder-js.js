@@ -447,7 +447,7 @@ GridderJS.options = {};
 GridderJS.optionsForElement = function (element) {
   // Get the `GridderJS.options.elementId` for this element if it exists
   if (element.getAttribute("id")) {
-    return GridderJS.options[camelize(element.getAttribute("id"))];
+    return GridderJS.options[element.getAttribute("id")];
   } else {
     return undefined;
   }
